@@ -2,7 +2,7 @@
 
 ## 介绍
 
-**nnictl** is a command line tool, which can be used to control experiments, such as start/stop/resume an experiment, start/stop NNIBoard, etc.
+**nnictl** 是一个命令行工具，用来控制 NNI 实验，如启动、停止、继续实验，启动、停止 NNIBoard 等等。
 
 ## 命令
 
@@ -33,12 +33,12 @@ nnictl support commands:
       
       nnictl create [OPTIONS]
       
-      Options:
+      选项：
       
-      | Name, shorthand | Required | Default | Description                           |
-      | --------------- | -------- | ------- | ------------------------------------- |
-      | --config, -c    | True     |         | yaml configure file of the experiment |
-      | --port, -p      | False    |         | the port of restful server            |
+      | 参数及缩写        | 是否必需  | 默认值 | 说明                                    |
+      | ------------ | ----- | --- | ------------------------------------- |
+      | --config, -c | True  |     | yaml configure file of the experiment |
+      | --port, -p   | False |     | the port of restful server            |
 
 * **nnictl resume**
    
@@ -91,54 +91,54 @@ nnictl support commands:
          | --filename, -f | True  |     | 新的搜索空间文件名   |
          
          * **nnictl update concurrency** 
-         * Description
+         * 说明
             
             You can use this command to update an experiment's concurrency.
          
-         * Usage
+         * 用法
             
             nnictl update concurrency [OPTIONS]
             
-            Options:
+            选项：
             
-            | Name, shorthand | Required | Default | Description                             |
-            | --------------- | -------- | ------- | --------------------------------------- |
-            | id              | False    |         | ID of the experiment you want to set    |
-            | --value, -v     | True     |         | the number of allowed concurrent trials |
+            | 参数及缩写       | 是否必需  | 默认值 | 说明                                      |
+            | ----------- | ----- | --- | --------------------------------------- |
+            | id          | False |     | 需要设置的实验的 id                             |
+            | --value, -v | True  |     | the number of allowed concurrent trials |
          
          * **nnictl update duration**
          
-         * Description
+         * 说明
             
                 You can use this command to update an experiment's concurrency.  
                 
          
-         * Usage
+         * 用法
             
             nnictl update duration [OPTIONS]
             
-            Options:
+            选项：
          
-         | Name, shorthand | Required | Default | Description                                                                                                                                  |
-         | --------------- | -------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
-         | id              | False    |         | ID of the experiment you want to set                                                                                                         |
-         | --value, -v     | True     |         | the experiment duration will be NUMBER seconds. SUFFIX may be 's' for seconds (the default), 'm' for minutes, 'h' for hours or 'd' for days. |
+         | 参数及缩写       | 是否必需  | 默认值 | 说明                                                                                                                                           |
+         | ----------- | ----- | --- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+         | id          | False |     | 需要设置的实验的 id                                                                                                                                  |
+         | --value, -v | True  |     | the experiment duration will be NUMBER seconds. SUFFIX may be 's' for seconds (the default), 'm' for minutes, 'h' for hours or 'd' for days. |
          
          * **nnictl update trialnum** 
-         * Description
+         * 说明
             
             You can use this command to update an experiment's maxtrialnum.
          
-         * Usage
+         * 用法
             
             nnictl update trialnum [OPTIONS]
             
-            Options:
+            选项：
             
-            | Name, shorthand | Required | Default | Description                                   |
-            | --------------- | -------- | ------- | --------------------------------------------- |
-            | id              | False    |         | ID of the experiment you want to set          |
-            | --value, -v     | True     |         | the new number of maxtrialnum you want to set |
+            | 参数及缩写       | 是否必需  | 默认值 | 说明                                            |
+            | ----------- | ----- | --- | --------------------------------------------- |
+            | id          | False |     | 需要设置的实验的 id                                   |
+            | --value, -v | True  |     | the new number of maxtrialnum you want to set |
 
 * **nnictl trial**
    
@@ -152,11 +152,11 @@ nnictl support commands:
          
          nnictl trial ls
       
-      Options:
+      选项：
       
-      | Name, shorthand | Required | Default | Description                          |
-      | --------------- | -------- | ------- | ------------------------------------ |
-      | id              | False    |         | ID of the experiment you want to set |
+      | 参数及缩写 | 是否必需  | 默认值 | 说明          |
+      | ----- | ----- | --- | ----------- |
+      | id    | False |     | 需要设置的实验的 id |
    
    * **nnictl trial kill**
       
@@ -206,7 +206,7 @@ nnictl support commands:
       
       nnictl experiment show
       
-      Options:
+      选项：
       
       | 参数及缩写 | 是否必需  | 默认值 | 说明          |
       | ----- | ----- | --- | ----------- |
@@ -222,7 +222,7 @@ nnictl support commands:
       
       nnictl experiment status
       
-      Options:
+      选项：
       
       | 参数及缩写 | 是否必需  | 默认值 | 说明          |
       | ----- | ----- | --- | ----------- |
@@ -238,7 +238,7 @@ nnictl support commands:
       
       nnictl experiment list
       
-      Options:
+      选项：
       
       | 参数及缩写 | 是否必需  | 默认值   | 说明               |
       | ----- | ----- | ----- | ---------------- |
@@ -288,7 +288,7 @@ nnictl support commands:
       
       nnictl log stderr [options]
       
-      Options:
+      选项：
       
       | 参数及缩写      | 是否必需  | 默认值 | 说明               |
       | ---------- | ----- | --- | ---------------- |
@@ -307,7 +307,7 @@ nnictl support commands:
       
       nnictl log trial [options]
       
-      Options:
+      选项：
       
       | 参数及缩写 | 是否必需  | 默认值 | 说明     |
       | ----- | ----- | --- | ------ |
