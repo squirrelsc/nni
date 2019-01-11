@@ -244,24 +244,25 @@
     
     * **builtinAssessorName**
     
-    **builtinAssessorName** specifies the name of system assessor, nni sdk provides four kinds of tuner, including {**TPE**, **Random**, **Anneal**, **Evolution**}
+    **builtinAssessorName** 指定了系统评估器的名字，NNI SDK 提供了一种评估器：{**Medianstop**}。
     
     * **classArgs**
       
-      **classArgs** specifies the arguments of tuner algorithm
+      **classArgs** 指定了评估器算法的参数。
   
-  * **codeDir**, **classFileName**, **className** and **classArgs** * **codeDir**
+  * **codeDir**, **classFileName**, **className** and **classArgs**  
+    * **codeDir**
     
-    **codeDir** specifies the directory of tuner code.
+    **codeDir** 指定评估器代码的目录。
     
         * __classFileName__
         
     
-    **classFileName** specifies the name of tuner file.
+    **classFileName** 指定评估器文件名。
     
     * **className**
     
-    **className** specifies the name of tuner class.
+    **className** 指定评估器类名。
     
     * **classArgs**
     
@@ -269,7 +270,7 @@
   
   * **gpuNum**
   
-  **gpuNum** specifies the gpu number to run the assessor process. 此字段的值必须是正整数。
+  **gpuNum** 指定了运行评估器进程的 GPU 数量。 此字段的值必须是正整数。
   
           注意: 只能使用一种方法来指定评估器，例如：设置 {assessorName, optimizationMode} 或 {assessorCommand, assessorCwd}，不能同时设置。如果不需要使用评估器，可将其置为空。 
       
@@ -283,7 +284,7 @@
   
   * **codeDir**
     
-    **codeDir** specifies the directory of your own trial file.
+    **codeDir** 指定了尝试代码文件的目录。
   
   * **gpuNum**
     
@@ -298,7 +299,7 @@
   
   * **codeDir**
     
-    **codeDir** specifies the directory of the own trial file.
+    **codeDir** 指定了尝试代码文件的目录。
   
   * **gpuNum**
     
@@ -384,7 +385,7 @@
     
     * **image**
       
-      **iamge** set the image to be used in **worker**.
+      **iamge** 设置了 **worker** 使用的 docker 映像。
 
 * **machineList**
   
