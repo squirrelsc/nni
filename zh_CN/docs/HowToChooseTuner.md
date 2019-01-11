@@ -183,7 +183,7 @@ NNI 中的 SMAC 只支持部分类型的[搜索空间](./SearchSpaceSpec.md)，�
 <a name="NetworkMorphism"></a>
 **Network Morphism**
 
-[Network Morphism](7) provides functions to automatically search for architecture of deep learning models. 每个子网络都继承于父网络的知识和形态，并变换网络的不同形态，包括深度，宽度，跨层连接（skip-connection）。 接着，使用历史的架构和指标，来估计子网络的值。 然后会选择最有希望的模型进行训练。 参考[这里](../src/sdk/pynni/nni/networkmorphism_tuner/README.md)，了解更多信息。
+[Network Morphism](7) 提供了深度学习模型的自动架构搜索功能。 每个子网络都继承于父网络的知识和形态，并变换网络的不同形态，包括深度，宽度，跨层连接（skip-connection）。 接着，使用历史的架构和指标，来估计子网络的值。 然后会选择最有希望的模型进行训练。 参考[这里](../src/sdk/pynni/nni/networkmorphism_tuner/README.md)，了解更多信息。
 
 *安装*： NetworkMorphism 需要 [pyTorch](https://pytorch.org/get-started/locally)，必须提前安装它。
 
