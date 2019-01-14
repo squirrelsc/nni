@@ -357,7 +357,7 @@
     
     * **image**
       
-      **iamge** set the image to be used in **ps**.
+      **image** 设置了 **ps** 使用的 docker 映像。
   
   * **worker**
     
@@ -385,7 +385,7 @@
     
     * **image**
       
-      **iamge** 设置了 **worker** 使用的 docker 映像。
+      **image** 设置了 **worker** 使用的 docker 映像。
 
 * **machineList**
   
