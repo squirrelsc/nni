@@ -36,20 +36,20 @@ NNI 支持在 [Kubeflow](https://github.com/kubeflow/kubeflow)上运行，称为
 
     authorName: your_name
     experimentName: example_mnist
-    # how many trials could be concurrently running
+    # 并发运行数量
     trialConcurrency: 4
-    # maximum experiment running duration
+    # 实验的最长运行时间
     maxExecDuration: 3h
-    # empty means never stop
+    # 空意味着一直运行
     maxTrialNum: 100
-    # choice: local, remote, pai, kubeflow
+    # 可选的项目: local, remote, pai, kubeflow
     trainingServicePlatform: kubeflow
-    # choice: true, false  
+    # 可选的项目: true, false  
     useAnnotation: false
     tuner:
       builtinTunerName: TPE
       classArgs:
-        #choice: maximize, minimize
+        #可选的项目: maximize, minimize
         optimize_mode: maximize
     trial:
       codeDir: ~/nni/examples/trials/mnist
