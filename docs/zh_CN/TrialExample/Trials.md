@@ -1,6 +1,6 @@
 # 实现 NNI 的 Trial（尝试）代码
 
-**Trial（尝试）**是将一组参数组合（例如，超参）在模型上独立的一次尝试。
+A **Trial** in NNI is an individual attempt at applying a configuration (e.g., a set of hyper-parameters) to a model.
 
 定义 NNI 的 Trial，需要首先定义参数组，并更新模型代码。 NNI 有两种方法来实现 Trial：[NNI API](#nni-api) 以及 [NNI Python annotation](#nni-annotation)。 参考[这里的](#more-examples)更多 Trial 示例。
 
@@ -25,11 +25,11 @@
 
 ### 第二步：更新模型代码
 
-* Import NNI
-    
+- Import NNI
+
     在 Trial 代码中加上 `import nni`。
 
-* 从 Tuner 获得参数值
+- 从 Tuner 获得参数值
 
 ```python
 RECEIVED_PARAMS = nni.get_next_parameter()
@@ -39,7 +39,7 @@ RECEIVED_PARAMS = nni.get_next_parameter()
 
 `{"conv_size": 2, "hidden_size": 124, "learning_rate": 0.0307, "dropout_rate": 0.2029}`.
 
-* 定期返回指标数据（可选）
+- 定期返回指标数据（可选）
 
 ```python
 nni.report_intermediate_result(metrics)
@@ -47,17 +47,16 @@ nni.report_intermediate_result(metrics)
 
 `指标`可以是任意的 Python 对象。 如果使用了 NNI 内置的 Tuner/Assessor，`指标`只可以是两种类型：1) 数值类型，如 float、int， 2) dict 对象，其中必须由键名为 `default`，值为数值的项目。 `指标`会发送给 [Assessor](../Assessor/BuiltinAssessor.md)。 通常，`指标`包含了定期评估的损失值或精度。
 
-* 返回配置的最终性能
+- 返回配置的最终性能
 
 ```python
 nni.report_final_result(metrics)
 ```
-
 `指标`可以是任意的 Python 对象。 如果使用了内置的 Tuner/Assessor，`指标`格式和 `report_intermediate_result` 中一样，这个数值表示模型的性能，如精度、损失值等。 `指标`会发送给 [Tuner](../Tuner/BuiltinTuner.md)。
 
 ### 第三步：启用 NNI API
 
-要启用 NNI 的 API 模式，需要将 useAnnotation 设置为 *false*，并提供搜索空间文件的路径，即第一步中定义的文件：
+To enable NNI API mode, you need to set useAnnotation to *false* and provide the path of the SearchSpace file was defined in step 1:
 
 ```yaml
 useAnnotation: false
@@ -84,10 +83,9 @@ searchSpacePath: /path/to/your/search_space.json
 ### 第一步：在代码中加入 Annotation
 
 下面是加入了 Annotation 的 TensorFlow 代码片段，高亮的 4 行 Annotation 用于：
-
-1. 调优 batch\_size 和 dropout\_rate
-2. 每执行 100 步返回 test\_acc
-3. 最后返回 test\_acc 作为最终结果。
+  1. 调优 batch\_size 和 dropout\_rate
+  2. 每执行 100 步返回 test\_acc
+  3. 最后返回 test\_acc 作为最终结果。
 
 值得注意的是，新添加的代码都是注释，不会影响以前的执行逻辑。因此这些代码仍然能在没有安装 NNI 的环境中运行。
 
@@ -114,28 +112,26 @@ with tf.Session() as sess:
         feed_dict={mnist_network.images: mnist.test.images,
                     mnist_network.labels: mnist.test.labels,
                     mnist_network.keep_prob: 1.0})
-
 +   """@nni.report_final_result(test_acc)"""
 ```
 
-**注意**：
-
-* `@nni.variable` 会对它的下面一行进行修改，左边被赋值变量必须与 `@nni.variable` 的关键字 `name` 相同。
-* `@nni.report_intermediate_result`/`@nni.report_final_result` 会将数据发送给 Assessor、Tuner。
+**NOTE**:
+- `@nni.variable` 会对它的下面一行进行修改，左边被赋值变量必须与 `@nni.variable` 的关键字 `name` 相同。
+- `@nni.report_intermediate_result`/`@nni.report_final_result` 会将数据发送给 Assessor、Tuner。
 
 Annotation 的语法和用法等，参考 [Annotation](../Tutorial/AnnotationSpec.md)。
 
+
 ### 第二步：启用 Annotation
 
-在 YAML 配置文件中设置 *useAnnotation* 为 true 来启用 Annotation：
-
-    useAnnotation: true
-    
+In the YAML configure file, you need to set *useAnnotation* to true to enable NNI annotation:
+```
+useAnnotation: true
+```
 
 ## 用于调试的独立模式
 
 NNI 支持独立模式，使 Trial 代码无需启动 NNI 实验即可运行。 这样能更容易的找出 Trial 代码中的 Bug。 NNI Annotation 天然支持独立模式，因为添加的 NNI 相关的行都是注释的形式。 NNI Trial API 在独立模式下的行为有所变化，某些 API 返回虚拟值，而某些 API 不报告值。 有关这些 API 的完整列表，请参阅下表。
-
 ```python
 ＃注意：请为 Trial 代码中的超参分配默认值
 nni.get_next_parameter＃返回 {}
