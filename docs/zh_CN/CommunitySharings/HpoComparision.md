@@ -1,5 +1,4 @@
 # 超参数优化的对比
-
 *匿名作者*
 
 超参优化算法（HPO）在几个问题上的对比。
@@ -20,15 +19,16 @@
 
 环境：
 
-    OS: Linux Ubuntu 16.04 LTS
-    CPU: Intel(R) Xeon(R) CPU E5-2690 v3 @ 2.60GHz 2600 MHz
-    Memory: 112 GB
-    NNI Version: v0.7
-    NNI 模式(local|pai|remote): local
-    Python 版本: 3.6
-    使用的虚拟环境: Conda
-    是否在 Docker 中运行: no
-    
+```
+OS: Linux Ubuntu 16.04 LTS
+CPU: Intel(R) Xeon(R) CPU E5-2690 v3 @ 2.60GHz 2600 MHz
+Memory: 112 GB
+NNI Version: v0.7
+NNI 模式(local|pai|remote): local
+Python 版本: 3.6
+使用的虚拟环境: Conda
+是否在 Docker 中运行: no
+```
 
 ## AutoGBDT 示例
 
@@ -114,21 +114,22 @@
 
 #### 计算机配置
 
-    RocksDB:    version 6.1
-    CPU:        6 * Intel(R) Xeon(R) CPU E5-2690 v4 @ 2.60GHz
-    CPUCache:   35840 KB
-    Keys:       16 bytes each
-    Values:     100 bytes each (50 bytes after compression)
-    Entries:    1000000
-    
+```
+RocksDB:    version 6.1
+CPU:        6 * Intel(R) Xeon(R) CPU E5-2690 v4 @ 2.60GHz
+CPUCache:   35840 KB
+Keys:       16 bytes each
+Values:     100 bytes each (50 bytes after compression)
+Entries:    1000000
+```
 
 #### 存储性能
 
-**延迟**：每个 IO 请求都需要一些时间才能完成，这称为平均延迟。 有几个因素会影响此时间，包括网络连接质量和硬盘IO性能。
+**Latency**: each IO request will take some time to complete, this is called the average latency. 有几个因素会影响此时间，包括网络连接质量和硬盘IO性能。
 
-**IOPS**： **每秒的 IO 操作数量**，这意味着可以在一秒钟内完成的*读取或写入操作次数*。
+**IOPS**: **IO operations per second**, which means the amount of _read or write operations_ that could be done in one seconds time.
 
-**IO 大小**： **每个 IO 请求的大小**。 根据操作系统和需要磁盘访问的应用程序、服务，它将同时发出读取或写入一定数量数据的请求。
+**IO size**: **the size of each IO request**. 根据操作系统和需要磁盘访问的应用程序、服务，它将同时发出读取或写入一定数量数据的请求。
 
 **吞吐量（以 MB/s 为单位）= 平均 IO 大小 x IOPS **
 
