@@ -18,9 +18,9 @@ NNI 依赖于 Node.js, Yarn, 和 PIP 来生成，推荐安装 TypeScript。
 
 运行 NNI 需要 Node.js 以及依赖库。 Node.js 依赖库 (包括 TypeScript) 可以通过 Yarn 来安装， Python 依赖库可以通过 setuptools 或者 PIP 来安装。
 
-For NNI *users*, `make install-dependencies` can be used to install Node.js and Yarn. Node.js 会被安装到 NNI 的安装目录，Yarn 会被安装到 `/tmp/nni-yarn`。 安装过程需要 wget。
+NNI *普通用户*可以用 `make install-dependencies` 来安装 Node.js 和 Yarn。 Node.js 会被安装到 NNI 的安装目录，Yarn 会被安装到 `/tmp/nni-yarn`。 安装过程需要 wget。
 
-For NNI *developers*, it is recommended to install Node.js and Yarn manually. 可浏览相应的官方文档了解安装过程。
+推荐 NNI *开发人员*手工安装 Node.js 和 Yarn。 可浏览相应的官方文档了解安装过程。
 
 ## 生成 NNI
 
