@@ -1,15 +1,16 @@
-# **在 NNI 中调试代码**
+**在 NNI 中调试代码**
+===
 
 ## 概述
 
 NNI 中的日志分为三部分。 包括 NNI Manager， Dispatcher 以及 Trial。 这里会简单介绍这些组件。 更多信息可参考[概述](../Overview.md)。
 
-- **NNI Controller**：NNI Controller (nnictl) 是命令行工具，用来管理 Experiments（如：启动 Experiment）。
-- **NNI Manager**：这是 NNI 的核心。当 Experiment 出现严重错误时，从它的日志中才能找到原因。（例如，Web 界面无法打开，或者训练平台失败）
-- **Dispatcher**: Dispatcher 调用 **Tuner** 和 **Assessor** 的方法。 它的日志与 Tuner 和 Assessor 代码有关。 
-    - **Tuner**: Tuner 是一个自动机器学习算法，会为下一个 Trial 生成新的配置。 新的 Trial 会使用这组配置来运行。
-    - **Assessor**：Assessor 分析 Trial 的中间结果（例如，测试数据集上定期的精度），来确定 Trial 是否应该被提前终止。
-- **Trial**：Trial 的代码是用户实现的代码，每次 Trial 运行时会尝试一组新的配置（例如，一组新的超参值，或者某个神经网络结构）。
+- **NNI controller**: NNI controller (nnictl) is the nni command-line tool that is used to manage experiments (e.g., start an experiment).
+- **nnimanager**: nnimanager is the core of NNI, whose log is important when the whole experiment fails (e.g., no webUI or training service fails)
+- **Dispatcher**: Dispatcher calls the methods of **Tuner** and **Assessor**. 它的日志与 Tuner 和 Assessor 代码有关。
+    - **Tuner**: Tuner is an AutoML algorithm, which generates a new configuration for the next try. 新的 Trial 会使用这组配置来运行。
+    - **Assessor**: Assessor analyzes trial's intermediate results (e.g., periodically evaluated accuracy on test dataset) to tell whether this trial can be early stopped or not.
+- **Trial**: Trial code is the code you write to run your experiment, which is an individual attempt at applying a new configuration (e.g., a set of hyperparameter values, a specific nerual architecture).
 
 ## 日志的位置
 
@@ -21,8 +22,8 @@ NNI 中有三种日志。 在创建 Experiment 时，可增加命令行参数 `-
 
 通过 `nnictl log stderr` 命令来查看错误信息。 参考 [NNICTL](Nnictl.md) 了解更多命令选项。
 
-### Experiment 根目录
 
+### Experiment 根目录
 每个 Experiment 都有一个根目录，会显示在 Web 界面的右上角。 如果无法打开 Web 界面，可将 `~/nni/experiment/experiment_id/` 中的 `experiment_id` 替换为实际的 Experiment ID，来组合出根目录。 `experiment_id` 可以在运行 `nnictl create ...` 来创建新 Experiment 的输出中找到。
 
 > 如有需要，可以在配置文件中修改 `logDir`，来指定存储 Experiment 的目录。（默认为 `~/nni/experiment`）。 参考[配置](ExperimentConfig.md)文档，了解更多信息。
@@ -41,35 +42,37 @@ NNI 中有不同的错误类型。 根据严重程度，可分为三类。 当 N
 
 一般情况下，打开 Web 界面，可以在 `Overview` 标签的 `Status` 上看到错误信息。 如果 Web 界面无法打开，可以通过命令行来检查。
 
-### **NNI** 失败
+### **NNI** Fails
 
 这是最严重的错误。 发生这种错误时，整个 Experiment 都会失败，Trial 也不会运行。 这通常是由安装问题导致的。
 
 先检查 `nnictl` 的错误输出文件 `stderr` (运行 nnictl log stderr)，然后检查 `nnimanager` 的日志来看看是否由任何错误。
 
-### **Dispatcher** 失败
 
-这通常是 Tuner 失败的情况。 可检查 Dispatcher 的日志来分析出现了什么问题。 对于内置的 Tuner，常见的错误可能是无效的搜索空间（不支持的搜索空间类型，或配置文件中的 Tuner 参数的错误）。
+### **Dispatcher** Fails
 
-以后一种情况为例。 某自定义的 Tuner，*\_init*\_ 函数有名为 `optimize_mode` 的参数，但配置文件中没有提供此参数。NNI 就会因为初始化 Tuner 失败而造成 Experiment 失败。 可在 Web 界面看到如下错误：
+这通常是 Tuner 失败的情况。 可检查 Dispatcher 的日志来分析出现了什么问题。 For built-in tuner, some common errors might be invalid search space (unsupported type of search space or inconsistence between initializing args in configuration file and actual tuner's \_\_init\_\_ function args).
+
+以后一种情况为例。 If you write a customized tuner who's \_\_init\_\_ function has an argument called `optimize_mode`, which you do not provide in your configuration file, NNI will fail to run your tuner so the experiment fails. 可在 Web 界面看到如下错误：
 
 ![](../../img/dispatcher_error.jpg)
 
 可以看到这是一个 Dispatcher 的错误。 因此，检查 Dispatcher 的日志，可找到如下信息：
 
-    [2019-02-19 19:36:45] DEBUG (nni.main/MainThread) START
-    [2019-02-19 19:36:47] ERROR (nni.main/MainThread) __init__() missing 1 required positional arguments: 'optimize_mode'
-    Traceback (most recent call last):
-      File "/usr/lib/python3.7/site-packages/nni/__main__.py", line 202, in <module>
-        main()
-      File "/usr/lib/python3.7/site-packages/nni/__main__.py", line 164, in main
-        args.tuner_args)
-      File "/usr/lib/python3.7/site-packages/nni/__main__.py", line 81, in create_customized_class_instance
-        instance = class_constructor(**class_args)
-    TypeError: __init__() missing 1 required positional arguments: 'optimize_mode'.
-    
+```
+[2019-02-19 19:36:45] DEBUG (nni.main/MainThread) START
+[2019-02-19 19:36:47] ERROR (nni.main/MainThread) __init__() missing 1 required positional arguments: 'optimize_mode'
+Traceback (most recent call last):
+  File "/usr/lib/python3.7/site-packages/nni/__main__.py", line 202, in <module>
+    main()
+  File "/usr/lib/python3.7/site-packages/nni/__main__.py", line 164, in main
+    args.tuner_args)
+  File "/usr/lib/python3.7/site-packages/nni/__main__.py", line 81, in create_customized_class_instance
+    instance = class_constructor(**class_args)
+TypeError: __init__() missing 1 required positional arguments: 'optimize_mode'.
+```
 
-### **Trial** 失败
+### **Trial** Fails
 
 这种情况下，NNI 可以继续运行，并创建新的 Trial。
 
@@ -81,4 +84,4 @@ NNI 中有不同的错误类型。 根据严重程度，可分为三类。 当 N
 
 如图，每个 Trial 都有日志路径，可以从中找到 Trial 的日志和 stderr。
 
-除了 Experiment 级调试之外，NNI 还提供调试单个 Trial 的功能，而无需启动整个 Experiment。 有关调试单个 Trial 代码的更多信息，请参考[独立运行模式](../TrialExample/Trials.md#用于调试的独立模式)。
+除了 Experiment 级调试之外，NNI 还提供调试单个 Trial 的功能，而无需启动整个 Experiment。 有关调试单个 Trial 代码的更多信息，请参考[独立运行模式](../TrialExample/Trials#用于调试的独立模式)。
