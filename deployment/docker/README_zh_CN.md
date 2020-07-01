@@ -1,6 +1,6 @@
 Dockerfile
 ===
-## 1.Description
+## 1.说明
 这是 NNI 项目的 Dockerfile 文件。 其中包含了 NNI 以及多个流行的深度学习框架。 在 `Ubuntu 16.04 LTS` 上进行过测试：
 
 ```
@@ -16,7 +16,7 @@ NNI v0.7
 ```
 此 Dockerfile 可作为定制的参考。
 
-## 2.How to build and run
+## 2.如何生成和运行
 __使用 `nni/deployment/docker` 的下列命令来生成 docker 映像。__
 ```
     docker build -t nni/nni .
@@ -37,7 +37,7 @@ __运行 docker 映像__
     docker run --runtime=nvidia -it nni/nni
 ```
 
-## 3.Directly retrieve the docker image
+## 3.拉取 docker 映像
 使用下列命令从 docker Hub 中拉取 NNI docker 映像。
 ```
 docker pull msranni/nni:latest
