@@ -1,24 +1,26 @@
 # 在 Kubeflow 上运行 Experiment
-
 ===
 
 NNI 支持在 [Kubeflow](https://github.com/kubeflow/kubeflow)上运行，称为 kubeflow 模式。 在开始使用 NNI 的 Kubeflow 模式前，需要有一个 Kubernetes 集群，可以是私有部署的，或者是 [Azure Kubernetes Service(AKS)](https://azure.microsoft.com/zh-cn/services/kubernetes-service/)，并需要一台配置好 [kubeconfig](https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/) 的 Ubuntu 计算机连接到此 Kubernetes 集群。 如果不熟悉 Kubernetes，可先浏览[这里](https://kubernetes.io/docs/tutorials/kubernetes-basics/)。 在 kubeflow 模式下，每个 Trial 程序会在 Kubernetes 集群中作为一个 Kubeflow 作业来运行。
 
 ## 私有部署的 Kubernetes 的准备工作
 
-1. 采用 Kubernetes 1.8 或更高版本。 根据[指南](https://kubernetes.io/docs/setup/)来安装 Kubernetes。
-2. 在 Kubernetes 集群中下载、安装、部署 **Kubeflow**。 根据[指南](https://www.kubeflow.org/docs/started/getting-started/)安装 Kubeflow。
-3. 配置 **kubeconfig** 文件，NNI 将使用此配置与 Kubernetes API 服务交互。 默认情况下，NNI 管理器会使用 $(HOME)/.kube/config 作为 kubeconfig 文件的路径。 也可以通过环境变量 **KUBECONFIG** 来指定其它 kubeconfig 文件。 根据[指南](https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig)了解更多 kubeconfig 的信息。
-4. 如果 NNI Trial 作业需要 GPU 资源，需按照[指南](https://github.com/NVIDIA/k8s-device-plugin)来配置 **Kubernetes 下的 Nvidia 插件**。
-5. 准备 **NFS 服务器** 并导出通用的装载 (mount)，推荐将 NFS 服务器路径映射到 `root_squash 选项`，否则可能会在 NNI 复制文件到 NFS 时出现权限问题。 参考[页面](https://linux.die.net/man/5/exports)，来了解关于 root_squash 选项，或 **Azure File Storage**。
-6. 在安装 NNI 并运行 nnictl 的计算机上安装 **NFS 客户端**。 运行此命令安装 NFSv4 客户端： ```apt-get install nfs-common```
+1. A **Kubernetes** cluster using Kubernetes 1.8 or later. 根据[指南](https://kubernetes.io/docs/setup/)来安装 Kubernetes。
+2. Download, set up, and deploy **Kubeflow** to your Kubernetes cluster. 根据[指南](https://www.kubeflow.org/docs/started/getting-started/)安装 Kubeflow。
+3. Prepare a **kubeconfig** file, which will be used by NNI to interact with your Kubernetes API server. 默认情况下，NNI 管理器会使用 $(HOME)/.kube/config 作为 kubeconfig 文件的路径。 You can also specify other kubeconfig files by setting the **KUBECONFIG** environment variable. 根据[指南](https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig)了解更多 kubeconfig 的信息。
+4. If your NNI trial job needs GPU resource, you should follow this [guideline](https://github.com/NVIDIA/k8s-device-plugin) to configure **Nvidia device plugin for Kubernetes**.
+5. Prepare a **NFS server** and export a general purpose mount (we recommend to map your NFS server path in `root_squash option`, otherwise permission issue may raise when NNI copy files to NFS. Refer this [page](https://linux.die.net/man/5/exports) to learn what root_squash option is), or **Azure File Storage**.
+6. Install **NFS client** on the machine where you install NNI and run nnictl to create experiment. 运行此命令安装 NFSv4 客户端：
+    ```
+    apt-get install nfs-common
+    ```
 
-7. 参考[指南](../Tutorial/QuickStart.md)安装 **NNI**。
+7. Install **NNI**, follow the install guide [here](../Tutorial/QuickStart.md).
 
 ## Azure 部署的 Kubernetes 的准备工作
 
 1. NNI 支持基于 Azure Kubernetes Service 的 Kubeflow，参考[指南](https://azure.microsoft.com/zh-cn/services/kubernetes-service/)来设置 Azure Kubernetes Service。
-2. 安装 [Azure CLI](https://docs.microsoft.com/zh-cn/cli/azure/install-azure-cli?view=azure-cli-latest) 和 **kubectl**。 使用 `az login` 命令来设置 Azure 账户吗，并将 kubectl 客户端连接到 AKS，参考此[指南](https://docs.microsoft.com/zh-cn/azure/aks/kubernetes-walkthrough#connect-to-the-cluster)。
+2. Install [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest) and __kubectl__.  使用 `az login` 命令来设置 Azure 账户吗，并将 kubectl 客户端连接到 AKS，参考此[指南](https://docs.microsoft.com/zh-cn/azure/aks/kubernetes-walkthrough#connect-to-the-cluster)。
 3. 在 Azure Kubernetes Service 上部署 Kubeflow，参考此[指南](https://www.kubeflow.org/docs/started/getting-started/)。
 4. 参考此[指南](https://docs.microsoft.com/zh-cn/azure/storage/common/storage-quickstart-create-account?tabs=portal)来创建 Azure 文件存储账户。 NNI 需要 Azure Storage Service 来存取代码和输出文件。
 5. NNI 需要访问密钥来连接 Azure 存储服务，NNI 使用 [Azure Key Vault](https://azure.microsoft.com/zh-cn/services/key-vault/) 服务来保护私钥。 设置 Azure Key Vault 服务，并添加密钥到 Key Vault 中来存取 Azure 存储账户。 参考[指南](https://docs.microsoft.com/zh-cn/azure/key-vault/quick-create-cli)来存储访问密钥。
@@ -45,7 +47,7 @@ kubeflowConfig:
   operator: pytorch-operator
 ```
 
-如果要使用 tf-operator，需要在 Trial 配置中设置 `ps` 和 `worker`。如果要使用 pytorch-operator，需要在 Trial 配置中设置 `master` 和 `worker`。
+If users want to use tf-operator, he could set `ps` and `worker` in trial config. If users want to use pytorch-operator, he could set `master` and `worker` in trial config.
 
 ## 支持的存储类型
 
@@ -178,23 +180,23 @@ kubeflowConfig:
 
 Kubeflow 模式的配置有下列主键：
 
-* codeDir 
+* codeDir
   * 代码目录，存放训练代码和配置文件
-* worker (必填)。 此部分用于配置 TensorFlow 的 worker 角色 
-  * replicas 
+* worker (必填)。 此部分用于配置 TensorFlow 的 worker 角色
+  * replicas
     * 必填。 需要运行的 TensorFlow woker 角色的数量，必须为正数。
-  * command 
-    * 必填。 用来运行 Trial 作业的命令，例如： ```python mnist.py```
-  * memoryMB 
+  * command
+    * 必填。 Command to launch your trial job, like `python mnist.py`
+  * memoryMB
     * 必填。 Trial 程序的内存需求，必须为正数。
   * cpuNum
   * gpuNum
-  * image 
+  * image
     * 必填。 在 kubeflow 模式中，Kubernetes 会安排 Trial 程序在 [Pod](https://kubernetes.io/docs/concepts/workloads/pods/pod/) 中执行。 此键用来指定 Trial 程序的 pod 使用的 Docker 映像。
     * [Docker Hub](https://hub.docker.com/) 上有预制的 NNI Docker 映像 [msranni/nni](https://hub.docker.com/r/msranni/nni/)。 它包含了用来启动 NNI Experiment 所依赖的所有 Python 包，Node 模块和 JavaScript。 生成此 Docker 映像的文件在[这里](https://github.com/Microsoft/nni/tree/master/deployment/docker/Dockerfile)。 可以直接使用此映像，或参考它来生成自己的映像。
-  * privateRegistryAuthPath 
+  * privateRegistryAuthPath
     * 可选字段，指定 `config.json` 文件路径。此文件，包含了 Docker 注册的认证令牌，用来从私有 Docker 中拉取映像。 [参考文档](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/)。
-  * apiVersion 
+  * apiVersion
     * 必填。 Kubeflow 的 API 版本。
 * ps (可选)。 此部分用于配置 TensorFlow 的 parameter 服务器角色。
 * master (可选)。 此部分用于配置 PyTorch 的 parameter 服务器角色。
