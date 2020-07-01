@@ -4,7 +4,7 @@
 
 当用户需要在 NNI 上运行 Trial 时，需要：
 
-**1) 写好原始的训练代码**。
+**1)Have an original Trial could run**,
 
 Trial 的代码可以是任何能在本机运行的机器学习代码。 这里使用 `mnist-keras. py` 作为示例：
 
@@ -86,7 +86,8 @@ if __name__ == '__main__':
 
 **2) 从 Tuner 获取配置**
 
-导入 `NNI` 并用 `nni.get_next_parameter()` 来接收参数。 注意代码中的 **10**, **24** 和 **25** 行。
+导入 `NNI` 并用 `nni.get_next_parameter()` 来接收参数。 Please noted **10**, **24** and **25** line in the following code.
+
 
 ```python
 import argparse
@@ -117,9 +118,11 @@ if __name__ == '__main__':
     train(ARGS, PARAMS)
 ```
 
-**3) 发送中间结果**
 
-用 `nni.report_intermediate_result` 将中间结果发送给 Assessor。 注意第 **5** 行。
+**3)  发送中间结果**
+
+用 `nni.report_intermediate_result` 将中间结果发送给 Assessor。 Please noted **5** line in the following code.
+
 
 ```python
 ...
@@ -139,10 +142,9 @@ def train(args, params):
 
 ...
 ```
-
 **4) 发送最终结果**
 
-用 `nni.report_final_result` 将最终结果发送给 Tuner。 注意第 **15** 行。
+用 `nni.report_final_result` 将最终结果发送给 Tuner。 Please noted **15** line in the following code.
 
 ```python
 ...
@@ -165,6 +167,7 @@ def train(args, params):
 
 这是完整示例：
 
+
 ```python
 import argparse
 import logging
@@ -186,7 +189,7 @@ NUM_CLASSES = 10
 
 def create_mnist_model(hyper_params, input_shape=(H, W, 1), num_classes=NUM_CLASSES):
     '''
-    创建简单的卷积模型
+    Create simple convolutional model
     '''
     layers = [
         Conv2D(32, kernel_size=(3, 3), activation='relu', input_shape=input_shape),
@@ -209,7 +212,7 @@ def create_mnist_model(hyper_params, input_shape=(H, W, 1), num_classes=NUM_CLAS
 
 def load_mnist_data(args):
     '''
-    加载 MNIST 数据集
+    Load MNIST dataset
     '''
     (x_train, y_train), (x_test, y_test) = mnist.load_data()
 
@@ -225,18 +228,18 @@ def load_mnist_data(args):
 
 class SendMetrics(keras.callbacks.Callback):
     '''
-    Keras 回调来返回中间结果给 NNI
+    Keras callback to send metrics to NNI framework
     '''
     def on_epoch_end(self, epoch, logs={}):
         '''
-        在每个 epoch 结束时运行
+        Run on end of each epoch
         '''
         LOG.debug(logs)
         nni.report_intermediate_result(logs)
 
 def train(args, params):
     '''
-    训练模型
+    Train model
     '''
     x_train, y_train, x_test, y_test = load_mnist_data(args)
     model = create_mnist_model(params)
@@ -250,7 +253,7 @@ def train(args, params):
 
 def generate_default_params():
     '''
-    生成默认超参
+    Generate default hyper parameters
     '''
     return {
         'optimizer': 'Adam',
@@ -267,12 +270,12 @@ if __name__ == '__main__':
     ARGS, UNKNOWN = PARSER.parse_known_args()
 
     try:
-        # 从 Tuner 中获取参数
+        # get parameters from tuner
         RECEIVED_PARAMS = nni.get_next_parameter()
         LOG.debug(RECEIVED_PARAMS)
         PARAMS = generate_default_params()
         PARAMS.update(RECEIVED_PARAMS)
-        # 训练
+        # train
         train(ARGS, PARAMS)
     except Exception as e:
         LOG.exception(e)
