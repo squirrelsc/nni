@@ -60,7 +60,7 @@ nnictl webui nas --logdir /path/to/your/logdir
 
 ## 局限性
 
-* NAS 可视化仅适用于 PyTorch >=1.4。PyTorch 1.3.1 无法正常工作。
+* NAS visualization only works with PyTorch >=1.4. We've tested it on PyTorch 1.3.1 and it doesn't work.
 * 其依赖于 PyTorch 对 tensorboard 导出图的支持，即依赖于 `torch.jit`。 如果模型不支持 `jit`，也无法使用。
 * 在加载中等大小，但有许多 Choice 的模型时（如 DARTS 的搜索空间），会遇到性能问题。
 
