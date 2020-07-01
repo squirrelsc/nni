@@ -1,4 +1,4 @@
-# **实现 NNI TrainingService**
+# NNI 中如何实现训练平台
 
 ## 概述
 
@@ -13,144 +13,139 @@ NNI 的架构如图所示。 NNIManager 是系统的核心管理模块，负责�
 本文中，会介绍 TrainingService 的简要设计。 如果要添加新的 TrainingService，只需要继承 TrainingServcie 类并实现相应的方法，不需要理解NNIManager、Dispatcher 等其它模块的细节。
 
 ## 代码文件夹结构
-
 NNI 的文件夹结构如下：
-
-    nni
-      |- deployment
-      |- docs
-      |- examaples
-      |- src
-      | |- nni_manager
-      | | |- common
-      | | |- config
-      | | |- core
-      | | |- coverage
-      | | |- dist
-      | | |- rest_server
-      | | |- training_service
-      | | | |- common
-      | | | |- kubernetes
-      | | | |- local
-      | | | |- pai
-      | | | |- remote_machine
-      | | | |- test
-      | |- sdk
-      | |- webui
-      |- test
-      |- tools
-      | |-nni_annotation
-      | |-nni_cmd
-      | |-nni_gpu_tool
-      | |-nni_trial_tool
-    
-
+```
+nni
+  |- deployment
+  |- docs
+  |- examaples
+  |- src
+  | |- nni_manager
+  | | |- common
+  | | |- config
+  | | |- core
+  | | |- coverage
+  | | |- dist
+  | | |- rest_server
+  | | |- training_service
+  | | | |- common
+  | | | |- kubernetes
+  | | | |- local
+  | | | |- pai
+  | | | |- remote_machine
+  | | | |- test
+  | |- sdk
+  | |- webui
+  |- test
+  |- tools
+  | |-nni_annotation
+  | |-nni_cmd
+  | |-nni_gpu_tool
+  | |-nni_trial_tool
+```
 `nni/src` 文件夹存储 NNI 的大部分源代码。 这个文件夹中的代码和 NNIManager、TrainingService、SDK、WebUI 等模块有关。 用户可以在 `nni/src/nni_manager/common/trainingService.ts` 文件中找到 TrainingService 抽象类的代码，并且把自己实现的子类放到 `nni/src/nni_manager/training_service` 文件夹下。 如果用户实现了自己的 TrainingService，还需要同时实现相应的单元测试代码，并把单元测试放到 `nni/src/nni_manager/training_service/test` 文件夹下。
 
 ## TrainingService 函数解释
-
-    abstract class TrainingService {
-        public abstract listTrialJobs(): Promise<TrialJobDetail[]>;
-        public abstract getTrialJob(trialJobId: string): Promise<TrialJobDetail>;
-        public abstract addTrialJobMetricListener(listener: (metric: TrialJobMetric) => void): void;
-        public abstract removeTrialJobMetricListener(listener: (metric: TrialJobMetric) => void): void;
-        public abstract submitTrialJob(form: JobApplicationForm): Promise<TrialJobDetail>;
-        public abstract updateTrialJob(trialJobId: string, form: JobApplicationForm): Promise<TrialJobDetail>;
-        public abstract get isMultiPhaseJobSupported(): boolean;
-        public abstract cancelTrialJob(trialJobId: string, isEarlyStopped?: boolean): Promise<void>;
-        public abstract setClusterMetadata(key: string, value: string): Promise<void>;
-        public abstract getClusterMetadata(key: string): Promise<string>;
-        public abstract cleanUp(): Promise<void>;
-        public abstract run(): Promise<void>;
-    }
-    
-
+```
+abstract class TrainingService {
+    public abstract listTrialJobs(): Promise<TrialJobDetail[]>;
+    public abstract getTrialJob(trialJobId: string): Promise<TrialJobDetail>;
+    public abstract addTrialJobMetricListener(listener: (metric: TrialJobMetric) => void): void;
+    public abstract removeTrialJobMetricListener(listener: (metric: TrialJobMetric) => void): void;
+    public abstract submitTrialJob(form: JobApplicationForm): Promise<TrialJobDetail>;
+    public abstract updateTrialJob(trialJobId: string, form: JobApplicationForm): Promise<TrialJobDetail>;
+    public abstract get isMultiPhaseJobSupported(): boolean;
+    public abstract cancelTrialJob(trialJobId: string, isEarlyStopped?: boolean): Promise<void>;
+    public abstract setClusterMetadata(key: string, value: string): Promise<void>;
+    public abstract getClusterMetadata(key: string): Promise<string>;
+    public abstract cleanUp(): Promise<void>;
+    public abstract run(): Promise<void>;
+}
+```
 TrainingService 父类有一些抽象方法，用户需要继承并实现这些抽象方法。
 
-**setClusterMetadata(key: string, value: string)**
+__setClusterMetadata(key: string, value: string)__
 
 ClusterMetadata 是与平台细节相关的数据，例如，ClusterMetadata 在远程服务器的定义是：
+```
+export class RemoteMachineMeta {
+    public readonly ip : string;
+    public readonly port : number;
+    public readonly username : string;
+    public readonly passwd?: string;
+    public readonly sshKeyPath?: string;
+    public readonly passphrase?: string;
+    public gpuSummary : GPUSummary | undefined;
+    /* GPU Reservation info, the key is GPU index, the value is the job id which reserves this GPU*/
+    public gpuReservation : Map<number, string>;
 
-    export class RemoteMachineMeta {
-        public readonly ip : string;
-        public readonly port : number;
-        public readonly username : string;
-        public readonly passwd?: string;
-        public readonly sshKeyPath?: string;
-        public readonly passphrase?: string;
-        public gpuSummary : GPUSummary | undefined;
-        /* GPU Reservation info, the key is GPU index, the value is the job id which reserves this GPU*/
-        public gpuReservation : Map<number, string>;
-    
-        constructor(ip : string, port : number, username : string, passwd : string,
-            sshKeyPath : string, passphrase : string) {
-            this.ip = ip;
-            this.port = port;
-            this.username = username;
-            this.passwd = passwd;
-            this.sshKeyPath = sshKeyPath;
-            this.passphrase = passphrase;
-            this.gpuReservation = new Map<number, string>();
-        }
+    constructor(ip : string, port : number, username : string, passwd : string,
+        sshKeyPath : string, passphrase : string) {
+        this.ip = ip;
+        this.port = port;
+        this.username = username;
+        this.passwd = passwd;
+        this.sshKeyPath = sshKeyPath;
+        this.passphrase = passphrase;
+        this.gpuReservation = new Map<number, string>();
     }
-    
-
+}
+```
 Metadata 中包括了主机地址，用户名和其它平台相关配置。 用户需要定义自己的 Metadata 格式，并在这个方法中相应实现。 这个方法在 Experiment 启动之前调用。
 
-**getClusterMetadata(key: string)**
+__getClusterMetadata(key: string)__
 
 此函数将返回相应值的元数据值，如果不需要使用，可留空。
 
-**submitTrialJob(form: JobApplicationForm)**
+__submitTrialJob(form: JobApplicationForm)__
 
 SubmitTrialJob 是用来提交新 Trial 任务的函数，需要生成一个 TrialJobDetail 类型的任务实例。 TrialJobDetail 定义如下：
-
-    interface TrialJobDetail {
-        readonly id: string;
-        readonly status: TrialJobStatus;
-        readonly submitTime: number;
-        readonly startTime?: number;
-        readonly endTime?: number;
-        readonly tags?: string[];
-        readonly url?: string;
-        readonly workingDirectory: string;
-        readonly form: JobApplicationForm;
-        readonly sequenceId: number;
-        isEarlyStopped?: boolean;
-    }
-    
-
+```
+interface TrialJobDetail {
+    readonly id: string;
+    readonly status: TrialJobStatus;
+    readonly submitTime: number;
+    readonly startTime?: number;
+    readonly endTime?: number;
+    readonly tags?: string[];
+    readonly url?: string;
+    readonly workingDirectory: string;
+    readonly form: JobApplicationForm;
+    readonly sequenceId: number;
+    isEarlyStopped?: boolean;
+}
+```
 根据不同的实现，用户可能需要把 Trial 任务放入队列中，并不断地从队里中取出任务进行提交。 或者也可以直接在这个方法中完成作业提交过程。
 
-**cancelTrialJob(trialJobId: string, isEarlyStopped?: boolean)**
+__cancelTrialJob(trialJobId: string, isEarlyStopped?: boolean)__
 
 如果此函数被调用，应取消平台启动的 Trial。 不同的平台有不同的取消作业的方式，这个方法应该根据不同平台的特点，实现相应的细节。
 
-**updateTrialJob(trialJobId: string, form: JobApplicationForm)**
+__updateTrialJob(trialJobId: string, form: JobApplicationForm)__
 
 调用此函数可更新 Trial 的任务状态，Trial 任务状态根据不同的平台来检测，并需要更新为 `RUNNING`, `SUCCEED`, `FAILED` 等状态。
 
-**getTrialJob(trialJobId: string)**
+__getTrialJob(trialJobId: string)__
 
 此函数根据 trialJobId 返回 trialJob 的实例。
 
-**listTrialJobs()**
+__listTrialJobs()__
 
 用户需要将所有 Trial 任务详情存入列表并返回。
 
-**addTrialJobMetricListener(listener: (metric: TrialJobMetric) => void)**
+__addTrialJobMetricListener(listener: (metric: TrialJobMetric) => void)__
 
 NNI 会启动一个 EventEmitter 来处理任务的指标数据，如果有检测到有新的数据，EventEmitter就会被触发，来执行相应的事件。 用户需要在这个方法中开始 EventEmitter。
 
-**removeTrialJobMetricListener(listener: (metric: TrialJobMetric) => void)**
+__removeTrialJobMetricListener(listener: (metric: TrialJobMetric) => void)__
 
 关闭 EventEmitter。
 
-**run()**
+__run()__
 
 Run() 函数是 TrainingService 的主循环，用户可以在这个函数中循环执行他们的代码逻辑，这个函数在实验结束前会一直循环执行。
 
-**cleanUp()**
+__cleanUp()__
 
 当实验结束后，此方法用来清除实验环境。 用户需要在这个方法中实现与平台相关的清除操作。
 
