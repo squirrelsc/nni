@@ -1,6 +1,6 @@
 # 加速掩码的模型
 
-*此功能还处于预览版。*
+*此功能处于测试阶段。*
 
 ## 介绍
 
@@ -17,9 +17,9 @@
 ## 用法
 
 ```python
-from nni.compression.speedup.torch import ModelSpeedup
+from nni.compression.torch import ModelSpeedup
 # model: 要加速的模型
-# dummy_input: 模型的示输入，传给 `jit.trace`
+# dummy_input: 模型的示例输入，传给 `jit.trace`
 # masks_file: 剪枝算法创建的掩码文件
 m_speedup = ModelSpeedup(model, dummy_input.to(device), masks_file)
 m_speedup.speedup_model()
