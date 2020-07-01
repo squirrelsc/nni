@@ -1,4 +1,5 @@
-# SMAC Tuner
+SMAC Tuner
+===
 
 ## SMAC
 
