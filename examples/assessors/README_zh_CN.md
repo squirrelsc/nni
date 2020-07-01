@@ -26,7 +26,7 @@ class CustomizedAssessor(Assessor):
         """
         决定是否应该终止 Trial。 必须重载。
         trial_history: 中间结果列表对象。
-        Returns AssessResult.Good or AssessResult.Bad.
+        返回 AssessResult.Good 或 AssessResult.Bad.
         """
         # 代码实现于此处。
         ...
@@ -39,7 +39,7 @@ import CustomizedAssessor
 
 def main():
     parser = argparse.ArgumentParser(description='parse command line parameters.')
-    # parse your assessor arg here.
+    # 解析 Assessor 参数。
     ...
     FLAGS, unparsed = parser.parse_known_args()
 
