@@ -5,8 +5,8 @@ NNI 支持自定义 Assessor。
 实现自定义的 Assessor，需要如下几步：
 
 1. 继承 Assessor 基类
-2. 实现 assess_trial 函数
-3. 在 Experiment 的 YAML 文件中配置好自定义的 Assessor
+1. 实现 assess_trial 函数
+1. 在 Experiment 的 YAML 文件中配置好自定义的 Assessor
 
 **1. 继承 Assessor 基类**
 
@@ -31,7 +31,7 @@ class CustomizedAssessor(Assessor):
         """
         确定是否要停止该 Trial。 必须重载。
         trial_history: 中间结果列表对象。
-        返回 AssessResult.Good 或 AssessResult.Bad。
+        Returns AssessResult.Good or AssessResult.Bad.
         """
         # 代码实现于此处。
         ...
@@ -52,11 +52,10 @@ assessor:
     arg1: value1
 ```
 
-注意在 **2** 中， `trial_history` 对象与 Trial 通过 `report_intermediate_result` 函数返回给 Assessor 的对象完全一致。
+Please noted in **2**. `trial_history` 对象与 Trial 通过 `report_intermediate_result` 函数返回给 Assessor 的对象完全一致。
 
 Assessor 的工作目录是`<home>/nni/experiments/<experiment_id>/log` 可从环境变量 `NNI_LOG_DIRECTORY` 中获取。
 
 更多示例，可参考：
-
 > * [medianstop-assessor](https://github.com/Microsoft/nni/tree/master/src/sdk/pynni/nni/medianstop_assessor)
 > * [curvefitting-assessor](https://github.com/Microsoft/nni/tree/master/src/sdk/pynni/nni/curvefitting_assessor)
