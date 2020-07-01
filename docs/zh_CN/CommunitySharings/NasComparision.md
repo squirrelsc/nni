@@ -1,22 +1,21 @@
 # 神经网络结构搜索的对比
-
 *匿名作者*
 
 训练和比较 NAS（神经网络架构搜索）的模型，包括 Autokeras，DARTS，ENAS 和 NAO。
 
 源码链接如下：
 
-- Autokeras: <https://github.com/jhfjhfj1/autokeras>
+- Autokeras: [https://github.com/jhfjhfj1/autokeras](https://github.com/jhfjhfj1/autokeras)
 
-- DARTS: <https://github.com/quark0/darts>
+- DARTS: [https://github.com/quark0/darts](https://github.com/quark0/darts)
 
-- ENAS: <https://github.com/melodyguan/enas>
+- ENAS: [https://github.com/melodyguan/enas](https://github.com/melodyguan/enas)
 
-- NAO: <https://github.com/renqianluo/NAO>
+- NAO: [https://github.com/renqianluo/NAO](https://github.com/renqianluo/NAO)
 
 ## 实验说明
 
-为了避免算法仅仅在 **CIFAR-10** 数据集上过拟合，还对比了包括 Fashion-MNIST, CIFAR-100, OUI-Adience-Age, ImageNet-10-1 (ImageNet的子集) 和 ImageNet-10-2 (ImageNet 的另一个子集) 在内的其它 5 个数据集。 分别从 ImageNet 中抽取 10 种不同类别标签的子集，组成 ImageNet10-1 和 ImageNet10-2 数据集 。
+To avoid over-fitting in **CIFAR-10**, we also compare the models in the other five datasets including Fashion-MNIST, CIFAR-100, OUI-Adience-Age, ImageNet-10-1 (subset of ImageNet), ImageNet-10-2 (another subset of ImageNet). 分别从 ImageNet 中抽取 10 种不同类别标签的子集，组成 ImageNet10-1 和 ImageNet10-2 数据集 。
 
 | 数据集                                                                                     | 训练数据集大小 | 类别标签数 | 数据集说明                                                       |
 |:--------------------------------------------------------------------------------------- | ------- | ----- | ----------------------------------------------------------- |
@@ -27,9 +26,11 @@
 | [ImageNet-10-1](http://www.image-net.org/)                                              | 9,750   | 10    | 咖啡杯、电脑键盘、餐桌、衣柜、割草机、麦克风、秋千、缝纫机、里程表和燃气泵。                      |
 | [ImageNet-10-2](http://www.image-net.org/)                                              | 9,750   | 10    | 鼓，班吉，口哨，三角钢琴，小提琴，管风琴，原声吉他，长号，长笛和萨克斯。                        |
 
+
+
 没有改变源码中的 Fine-tuning 方法。 为了匹配每个任务，改变了源码中模型的输入图片大小和输出类别数目的部分。
 
-所有 NAS 方法模型搜索时间和重训练时间都是**两天**。 所有结果都是基于**三次重复实验**。 评估计算机有一块 Nvidia Tesla P100 GPU、112GB 内存和 2.60GHz CPU (Intel E5-2690)。
+Search phase time for all NAS methods is **two days** as well as the retrain time.  Average results are reported based on **three repeat times**. 评估计算机有一块 Nvidia Tesla P100 GPU、112GB 内存和 2.60GHz CPU (Intel E5-2690)。
 
 NAO 需要太多的计算资源，因此只使用提供 Pipeline 脚本的 NAO-WS。
 
