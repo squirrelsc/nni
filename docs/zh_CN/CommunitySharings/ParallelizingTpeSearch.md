@@ -14,21 +14,21 @@
 
 ![](../../img/parallel_tpe_search_ei.PNG)
 
-由于 p(y|x) 计算成本较高，TPE 通过 p(x|y) 和 p(y) 来为 p(y|x) 建模。TPE 通过下列两个密度来定义 p(x|y)：
+Since calculation of p(y|x) is expensive, TPE approach modeled p(y|x) by p(x|y) and p(y).The TPE defines p(x|y) using two such densities:
 
 ![](../../img/parallel_tpe_search_tpe.PNG)
 
-l(x) 是通过观察 {x(i)} 来形成的密度，使得相应的损失 f(x(i)) 小于 y∗，而 g(x) 是使用剩余的观测值来形成的密度。 TPE 算法取决于 y∗ 大于观测到的最好的 f(x)，这样可以使用一些点来形成 l(x)。 TPE 算法选择了 y* 来作为一些观测值 y 的分位数 γ，因此 p(y<`y∗`) = γ，但不需要为特定的 p(y) 建模。 l 和 g 的树形结构使得根据 l 来计算多个候选项变得容易，可根据 g(x)/l(x) 来进行评估。 在每次迭代中，算法返回了具有最大 EI 的候选 x*。
+l(x) 是通过观察 {x(i)} 来形成的密度，使得相应的损失 f(x(i)) 小于 y∗，而 g(x) 是使用剩余的观测值来形成的密度。 TPE 算法取决于 y∗ 大于观测到的最好的 f(x)，这样可以使用一些点来形成 l(x)。 The TPE algorithm chooses y∗ to be some quantile γ of the observed y values, so that p(y<`y∗`) = γ, but no specific model for p(y) is necessary. l 和 g 的树形结构使得根据 l 来计算多个候选项变得容易，可根据 g(x)/l(x) 来进行评估。 在每次迭代中，算法返回了具有最大 EI 的候选 x*。
 
 这是 TPE 算法在二维搜索空间上的模拟。 不同的背景色表示了不同的值。 可以看出，TPE 在探索（exploration）和挖掘（exploitation）方面的表现都很好。 （黑色表示此轮样本的点，黄色表示历史点。）
 
 ![](../../img/parallel_tpe_search1.gif)
 
-**由于 EI 是连续函数，因此 EI 的最高 x 在某个状态下是确定的 。** 如下图所示，蓝色三角形表示在当前状态下最有可能进行采样的点。
+**Since EI is a continuous function, the highest x of EI is determined at a certain status.** As shown in the figure below, the blue triangle is the point that is most likely to be sampled in this state.
 
 ![](../../img/parallel_tpe_search_ei2.PNG)
 
-TPE 在顺序执行时表现很好，但当并发性较大时，会**在相同的 EI 状态下产生大量的点**，过于集中的点会减少 Tuner 探索的能力，造成了资源的浪费。
+TPE performs well when we use it in sequential, but if we provide a larger concurrency, then **there will be a large number of points produced in the same EI state**, too concentrated points will reduce the exploration ability of the tuner, resulting in resources waste.
 
 这是当 `concurrency=60` 时的模拟图，这种现象非常明显。
 
@@ -58,7 +58,7 @@ Kriging Believer 策略用等价于 Kriging 预测期望值的确定性值替换
 
 ![](../../img/parallel_tpe_search_cl.PNG)
 
-L 应在逻辑上根据 y 在 X 处获取的值来确定，可考虑使用的三个值：min{Y}, mean{Y}, 以及 max{Y}。 **L 越大，算法的探索性就越大，反之亦然。**
+L 应在逻辑上根据 y 在 X 处获取的值来确定，可考虑使用的三个值：min{Y}, mean{Y}, 以及 max{Y}。 **The larger L is, the more explorative the algorithm will be, and vice versa.**
 
 根据上述方法进行模拟。 下图显示了使用均值 liar，来最大化 q-EI。 能看到这些点开始分散了。
 
@@ -84,21 +84,10 @@ a, b, c, r, s 以及 t 的推荐值分别为：a = 1, b = 5.1 ⁄ (4π2), c = 5 
 
 以下比较了使用和不使用并行优化的情况。 二维多模的高斯混合分布的模拟结果如下：
 
-|         | concurrency=80               | concurrency=60               | concurrency=40               | concurrency=20               | concurrency=10               |
-| ------- | ---------------------------- | ---------------------------- | ---------------------------- | ---------------------------- | ---------------------------- |
-| 未使用并行优化 | avg = 0.4841   
-var = 0.1953 | avg = 0.5155   
-var = 0.2219 | avg = 0.5773   
-var = 0.2570 | avg = 0.4680   
-var = 0.1994 | avg = 0.2774   
-var = 0.1217 |
-| 使用了并行优化 | avg = 0.2132   
-var = 0.0700 | avg = 0.2177  
-var = 0.0796  | avg = 0.1835   
-var = 0.0533 | avg = 0.1671   
-var = 0.0413 | avg = 0.1918   
-var = 0.0697 |
-
+|         | concurrency=80                         | concurrency=60                         | concurrency=40                         | concurrency=20                         | concurrency=10                         |
+| ------- | -------------------------------------- | -------------------------------------- | -------------------------------------- | -------------------------------------- | -------------------------------------- |
+| 未使用并行优化 | avg =  0.4841 <br> var =  0.1953 | avg =  0.5155 <br> var =  0.2219 | avg =  0.5773 <br> var =  0.2570 | avg =  0.4680 <br> var =  0.1994 | avg = 0.2774 <br> var = 0.1217   |
+| 使用了并行优化 | avg =  0.2132 <br> var = 0.0700  | avg =  0.2177<br>var =  0.0796   | avg =  0.1835 <br> var =  0.0533 | avg =  0.1671 <br> var =  0.0413 | avg =  0.1918 <br> var =  0.0697 |
 
 注意：每次测试的样本总数为 240（确保成本相等）。 每种形式下的 Trial 重复了 1000 次，表中值为 1000 个 Trial 中最好结果的平均值和方差。
 
