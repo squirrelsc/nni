@@ -1,9 +1,7 @@
 # 在阅读理解上使用自动模型架构搜索
-
 该示例展示了如何使用遗传算法为阅读理解任务找到好的模型架构。
 
 ## 1. 搜索空间
-
 在阅读理解领域，注意力（Attention）和循环神经网络都已被证明是非常有效的方法，因此搜索空间定义如下：
 
 1. IDENTITY (Effectively 表示继续训练)。
@@ -17,7 +15,6 @@
 ![](../../../examples/trials/ga_squad/ga_squad.png)
 
 ### 新版本
-
 另一个时间更快，性能更好的版本正在开发中。 很快将发布。
 
 ## 2. 如何在本机运行此示例？
@@ -48,7 +45,6 @@ unzip glove.840B.300d.zip
 ```
 
 ### 2.2 更新配置
-
 修改 `nni/examples/trials/ga_squad/config.yml`，以下是默认配置：
 
 ```yaml
@@ -293,7 +289,7 @@ class CustomerTuner(Tuner):
             "output": [],
             "is_delete": false
         },
-        {"Comment": "实际图会有更多层。"}
+        {"Comment": "More layers will be here for actual graphs."}
     ]
 }
 ```
