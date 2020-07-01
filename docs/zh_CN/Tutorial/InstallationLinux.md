@@ -6,41 +6,43 @@
 
 ### 通过 pip 命令安装 NNI
 
-先决条件：`python 64-bit >= 3.5`
+  先决条件：`python 64-bit >= 3.5`
 
-    bash
-      python3 -m pip install --upgrade nni
+  ```bash
+  python3 -m pip install --upgrade nni
+  ```
 
 ### 通过源代码安装 NNI
 
-如果对某个或最新版本的代码感兴趣，可通过源代码安装 NNI。
+  如果对某个或最新版本的代码感兴趣，可通过源代码安装 NNI。
 
-先决条件：`python 64-bit >=3.5`, `git`, `wget`
+  先决条件：`python 64-bit >=3.5`, `git`, `wget`
 
-    bash
-      git clone -b v1.5 https://github.com/Microsoft/nni.git
-      cd nni
-      ./install.sh
+  ```bash
+  git clone -b v1.6 https://github.com/Microsoft/nni.git
+  cd nni
+  ./install.sh
+  ```
 
 ### 在 Docker 映像中使用 NNI
 
-也可将 NNI 安装到 docker 映像中。 参考[这里](../deployment/docker/README.md)来生成 NNI 的 Docker 映像。 也可通过此命令从 Docker Hub 中直接拉取 NNI 的映像 `docker pull msranni/nni:latest`。
+  也可将 NNI 安装到 docker 映像中。 参考[这里](../deployment/docker/README.md)来生成 NNI 的 Docker 映像。 也可通过此命令从 Docker Hub 中直接拉取 NNI 的映像 `docker pull msranni/nni:latest`。
 
 ## 验证安装
 
-以下示例基于 TensorFlow 1.x 。确保运行环境中使用的的是 ** TensorFlow 1.x**。
+The following example is built on TensorFlow 1.x. Make sure **TensorFlow 1.x is used** when running it.
 
 * 通过克隆源代码下载示例。
-    
-    ```bash
-    git clone -b v1.5 https://github.com/Microsoft/nni.git
-    ```
+
+  ```bash
+  git clone -b v1.6 https://github.com/Microsoft/nni.git
+  ```
 
 * 运行 MNIST 示例。
-    
-    ```bash
-    nnictl create --config nni/examples/trials/mnist-tfv1/config.yml
-    ```
+
+  ```bash
+  nnictl create --config nni/examples/trials/mnist-tfv1/config.yml
+  ```
 
 * 在命令行中等待输出 `INFO: Successfully started experiment!`。 此消息表明 Experiment 已成功启动。 通过命令行输出的 `Web UI url` 来访问 Experiment 的界面。
 
@@ -59,7 +61,6 @@ The Web UI urls are: http://223.255.255.1:8080   http://127.0.0.1:8080
 You can use these commands to get more information about the experiment
 -----------------------------------------------------------------------
          commands                       description
-
 1. nnictl experiment show        show the information of experiments
 2. nnictl trial ls               list all of trial jobs
 3. nnictl top                    monitor the status of running experiments
