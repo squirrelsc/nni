@@ -16,7 +16,7 @@
 
 由于使用了 DALI 来加速 ImageNet 的数据读取，需要 NVIDIA DALI >= 0.16。 [安装指南](https://docs.nvidia.com/deeplearning/sdk/dali-developer-guide/docs/installation.html)
 
-Download the flops lookup table from [here](https://1drv.ms/u/s!Am_mmG2-KsrnajesvSdfsq_cN48?e=aHVppN) (maintained by [Megvii](https://github.com/megvii-model)). 将 `op_flops_dict.pkl` 和 `checkpoint-150000.pth.tar` (如果不需要重新训练超网络) 放到 `data` 目录中。
+下载 FLOPs 查找表 [这里](https://1drv.ms/u/s!Am_mmG2-KsrnajesvSdfsq_cN48?e=aHVppN) (由 [Megvii](https://github.com/megvii-model) 维护)。 将 `op_flops_dict.pkl` 和 `checkpoint-150000.pth.tar` (如果不需要重新训练超网络) 放到 `data` 目录中。
 
 准备标准格式的 ImageNet (参考[这里的脚本](https://gist.github.com/BIGBALLON/8a71d225eff18d88e469e6ea9b39cef4))。 将其链接到 `data/imagenet` 会更方便。
 
