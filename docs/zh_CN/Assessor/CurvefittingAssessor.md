@@ -4,7 +4,7 @@
 
 Curve Fitting Assessor 是一个 LPA (learning, predicting, assessing，即学习、预测、评估) 的算法。 如果预测的 Trial X 在 step S 比性能最好的 Trial 要差，就会提前终止它。
 
-此算法中采用了 12 种曲线来拟合学习曲线。 The set of parametric curve models are chosen from this [reference paper][1]. 学习曲线的形状与先验知识是一致的：都是典型的递增的、饱和的函数。
+此算法中采用了 12 种曲线来拟合学习曲线。 这组参数曲线模型来自于[参考论文][1]。 学习曲线的形状与先验知识是一致的：都是典型的递增的、饱和的函数。
 
 ![learning_curve](../../img/curvefitting_learning_curve.PNG)
 
@@ -26,7 +26,7 @@ Curve Fitting Assessor 是一个 LPA (learning, predicting, assessing，即学�
 
 * 步骤 2：预测。 用 \xi 和混合模型公式，由 `f_comb` 实现了，在目标位置（例如 epoch 的总数）来计算期望的最终结果精度。
 
-* 步骤 3：如果拟合结果不收敛，则预测值将为 `None`。 In this case, we return `AssessResult.Good` to ask for future accuracy information and predict again. 此外，将从 `predict()` 函数获得正确值。 If this value is strictly greater than the best final performance in history * `THRESHOLD`(default value = 0.95), return `AssessResult.Good`, otherwise, return  `AssessResult.Bad`
+* 步骤 3：如果拟合结果不收敛，则预测值将为 `None`。 这种情况下，会返回 `AssessResult.Good` 来请求进一步的精度和预测信息。 此外，将从 `predict()` 函数获得正确值。 如果该值大于历史最好结果 * `THRESHOLD`（默认为 0.95），则返回 `AssessResult.Good`，否则返回  `AssessResult.Bad`
 
 下图显示了此算法在 MNIST Trial 历史数据上结果。其中绿点表示 Assessor 获得的数据，蓝点表示将来，但未知的数据，红色线条是 Curve fitting Assessor 的预测曲线。
 
