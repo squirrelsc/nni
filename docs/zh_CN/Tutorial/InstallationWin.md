@@ -36,7 +36,7 @@
 
 ## 验证安装
 
-The following example is built on TensorFlow 1.x. Make sure **TensorFlow 1.x is used** when running it.
+以下示例基于 TensorFlow 1.x 构建。 确保**使用了 TensorFlow 1.x** 运行时。
 
 * 克隆源代码中的示例。
 
