@@ -23,9 +23,9 @@ tuner:
 ```
 
 **classArgs 要求：**
-* **optimize_mode** (*maximize or minimize, optional, default = maximize*) - If 'maximize', tuners will try to maximize metrics. 如果为 'minimize'，表示 Tuner 的目标是将指标最小化。
-* **parallel_optimize** (*bool, optional, default = False*) - If True, TPE will use the Constant Liar algorithm to optimize parallel hyperparameter tuning. 否则，TPE 不会区分序列或并发的情况。
-* **constant_liar_type** (*min or max or mean, optional, default = min*) - The type of constant liar to use, will logically be determined on the basis of the values taken by y at X. There are three possible values, min{Y}, max{Y}, and mean{Y}.
+* **optimize_mode** (*maximize 或 minimize, 可选项, 默认值为 maximize*) - 如果为 'maximize'，表示 Tuner 会试着最大化指标。 如果为 'minimize'，表示 Tuner 的目标是将指标最小化。
+* **parallel_optimize** (*bool, 可选, 默认值为 False*) - 如果为 True，TPE 会使用 Constant Liar 算法来优化并行超参调优。 否则，TPE 不会区分序列或并发的情况。
+* **constant_liar_type** (*min、max 或 mean, 可选, 默认值为 min*) - 使用的 constant liar 类型，会在 X 点根据 y 的取值来确定。对应三个值：min{Y}, max{Y}, 和 mean{Y}。
 
 
 ## Random Search（随机搜索）
