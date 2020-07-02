@@ -58,7 +58,7 @@ Kriging Believer 策略用等价于 Kriging 预测期望值的确定性值替换
 
 ![](../../img/parallel_tpe_search_cl.PNG)
 
-L 应在逻辑上根据 y 在 X 处获取的值来确定，可考虑使用的三个值：min{Y}, mean{Y}, 以及 max{Y}。 **The larger L is, the more explorative the algorithm will be, and vice versa.**
+L 应在逻辑上根据 y 在 X 处获取的值来确定，可考虑使用的三个值：min{Y}, mean{Y}, 以及 max{Y}。 **L 越大，算法的探索性就越大，反之亦然。**
 
 根据上述方法进行模拟。 下图显示了使用均值 liar，来最大化 q-EI。 能看到这些点开始分散了。
 
