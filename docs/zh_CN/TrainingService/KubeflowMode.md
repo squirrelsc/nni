@@ -186,7 +186,7 @@ Kubeflow 模式的配置有下列主键：
   * replicas
     * 必填。 需要运行的 TensorFlow woker 角色的数量，必须为正数。
   * command
-    * 必填。 Command to launch your trial job, like `python mnist.py`
+    * 必填。 用来运行 Trial 作业的命令，例如：`python mnist.py`
   * memoryMB
     * 必填。 Trial 程序的内存需求，必须为正数。
   * cpuNum
