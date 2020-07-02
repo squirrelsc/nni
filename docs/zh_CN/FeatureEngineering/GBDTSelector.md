@@ -25,12 +25,12 @@ from nni.feature_engineering.gbdt_selector import GBDTSelector
 ...
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)
 
-# initlize a selector
+# 初始化 Selector
 fgs = GBDTSelector()
-# fit data
+# 拟合数据
 fgs.fit(X_train, y_train, ...)
-# get improtant features
-# will return the index with important feature here.
+# 获得重要的特征
+# 此处会返回重要特征的索引。
 print(fgs.get_selected_features(10))
 
 ...
@@ -47,11 +47,11 @@ print(fgs.get_selected_features(10))
 
 * **lgb_params** (dict, 必需) - lightgbm 模型参数。 详情参考[这里](https://lightgbm.readthedocs.io/en/latest/Parameters.html)
 
-* **eval_ratio** (float, 必需) - 数据大小的比例 It's used for split the eval data and train data from self.X.
+* **eval_ratio** (float, 必需) - 数据大小的比例 用于从 self.X 中拆分出评估和训练数据。
 
 * **early_stopping_rounds** (int, 必需) - lightgbm 中的提前终止设置。 详情参考[这里](https://lightgbm.readthedocs.io/en/latest/Parameters.html)。
 
-* **importance_type** (str, 必需) - 可为 'split' 或 'gain'。 'split' 表示 '结果包含特征在模型中使用的次数' 而 'gain' 表示 '结果包含此特征拆分出的总收益'。 The detail you could reference in [here](https://lightgbm.readthedocs.io/en/latest/pythonapi/lightgbm.Booster.html#lightgbm.Booster.feature_importance).
+* **importance_type** (str, 必需) - 可为 'split' 或 'gain'。 'split' 表示 '结果包含特征在模型中使用的次数' 而 'gain' 表示 '结果包含此特征拆分出的总收益'。 详情参考 [这里](https://lightgbm.readthedocs.io/en/latest/pythonapi/lightgbm.Booster.html#lightgbm.Booster.feature_importance)。
 
 * **num_boost_round** (int, 必需) - 提升的轮数。 详情参考[这里](https://lightgbm.readthedocs.io/en/latest/pythonapi/lightgbm.train.html#lightgbm.train)。
 
