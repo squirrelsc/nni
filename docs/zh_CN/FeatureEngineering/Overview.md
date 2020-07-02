@@ -100,9 +100,9 @@ class CustomizedSelector(FeatureSelector):
 
 `sklearn.pipeline.Pipeline` 可将模型连接在一起，例如特征选择，规范化，以及分类、回归，来组成一个典型的机器学习问题工作流。 下列步骤可帮助集成 sklearn，将定制的特征 Selector 作为管道的模块。
 
-1. Inherit the calss _sklearn.base.BaseEstimator_
+1. 继承类 _sklearn.base.BaseEstimator_
 1. 实现 _BaseEstimator_ 中的 _get_params_ 和 _set_params_ 函数
-1. Inherit the class _sklearn.feature_selection.base.SelectorMixin_
+1. 继承类 _sklearn.feature_selection.base.SelectorMixin_
 1. 实现 _SelectorMixin_ 中的 _get_support_, _transform_ 和 _inverse_transform_ 函数
 
 示例如下：
