@@ -417,7 +417,7 @@
 
 #### 支持新的 Tuner 和 Assessor
 
-* 支持新的 [Metis Tuner](Tuner/MetisTuner.md)。 Metis algorithm has been proofed to be well performed for **online** hyper-parameter tuning.
+* 支持新的 [Metis Tuner](Tuner/MetisTuner.md)。 对于**在线**超参调优的场景，Metis 算法已经被证明非常有效。
 * 支持 [ENAS customized tuner](https://github.com/countif/enas_nni)。由 GitHub 社区用户所贡献。它是神经网络的搜索算法，能够通过强化学习来学习神经网络架构，比 NAS 的性能更好。
 * 支持 [Curve fitting （曲线拟合）Assessor](Assessor/CurvefittingAssessor.md)，通过曲线拟合的策略来实现提前终止 Trial。
 * [权重共享的](https://github.com/microsoft/nni/blob/v0.5/docs/AdvancedNAS.md)高级支持：为 NAS Tuner 提供权重共享，当前支持 NFS。
@@ -453,7 +453,7 @@
 
 #### 改进 NNICTL
 
-* 在 nnictl 和 WEB 界面中显示 NNI 的版本信息。 You can run **nnictl -v** to show your current installed NNI version
+* 在 nnictl 和 WEB 界面中显示 NNI 的版本信息。 可使用 **nnictl -v** 来显示安装的 NNI 版本。
 
 #### 改进 WEB 界面
 
@@ -515,15 +515,15 @@
 
 ### API 的新功能和更新
 
-* <span style="color:red">**breaking change**</span>: nn.get_parameters() is refactored to nni.get_next_parameter. 所有以前版本的示例将无法在 v0.3 上运行，需要重新克隆 NNI 代码库获取新示例。 如果在自己的代码中使用了 NNI，也需要相应的更新。
+* <span style="color:red">**不兼容的变化**</span>：nn.get_parameters() 改为 nni.get_next_parameter。 所有以前版本的示例将无法在 v0.3 上运行，需要重新克隆 NNI 代码库获取新示例。 如果在自己的代码中使用了 NNI，也需要相应的更新。
 
-* New API **nni.get_sequence_id()**. 每个 Trial 任务都会被分配一个唯一的序列数字，可通过 nni.get_sequence_id() API 来获取。
+* 新 API **nni.get_sequence_id()**。 每个 Trial 任务都会被分配一个唯一的序列数字，可通过 nni.get_sequence_id() API 来获取。
 
   ```bash
   git clone -b v0.3 https://github.com/microsoft/nni.git
   ```
 
-* **nni.report_final_result(result)** API supports more data types for result parameter.
+* **nni.report_final_result(result)** API 对结果参数支持更多的数据类型。
 
   可用类型：
   * int
@@ -532,7 +532,7 @@
 
 ### 支持新的 Tuner
 
-* **Batch Tuner** which iterates all parameter combination, can be used to submit batch trial jobs.
+* **Batch Tuner（批处理调参器）** 会执行所有曹参组合，可被用来批量提交尝试任务。
 
 ### 新示例
 
