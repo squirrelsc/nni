@@ -5,11 +5,11 @@
 
 NNI 中的日志分为三部分。 包括 NNI Manager， Dispatcher 以及 Trial。 这里会简单介绍这些组件。 更多信息可参考[概述](../Overview.md)。
 
-- **NNI controller**: NNI controller (nnictl) is the nni command-line tool that is used to manage experiments (e.g., start an experiment).
-- **nnimanager**: nnimanager is the core of NNI, whose log is important when the whole experiment fails (e.g., no webUI or training service fails)
-- **Dispatcher**: Dispatcher calls the methods of **Tuner** and **Assessor**. 它的日志与 Tuner 和 Assessor 代码有关。
-    - **Tuner**: Tuner is an AutoML algorithm, which generates a new configuration for the next try. 新的 Trial 会使用这组配置来运行。
-    - **Assessor**: Assessor analyzes trial's intermediate results (e.g., periodically evaluated accuracy on test dataset) to tell whether this trial can be early stopped or not.
+- **NNI Controller**：NNI Controller (nnictl) 是命令行工具，用来管理 Experiments（如：启动 Experiment）。
+- **NNI Manager**：这是 NNI 的核心。当 Experiment 出现严重错误时，从它的日志中才能找到原因。（例如，Web 界面无法打开，或者训练平台失败）
+- **Dispatcher**: Dispatcher 调用 **Tuner** 和 **Assessor** 的方法。 它的日志与 Tuner 和 Assessor 代码有关。
+    - **Tuner**: Tuner 是一个自动机器学习算法，会为下一个 Trial 生成新的配置。 新的 Trial 会使用这组配置来运行。
+    - **Assessor**：Assessor 分析 Trial 的中间结果（例如，测试数据集上定期的精度），来确定 Trial 是否应该被提前终止。
 - **Trial**: Trial code is the code you write to run your experiment, which is an individual attempt at applying a new configuration (e.g., a set of hyperparameter values, a specific nerual architecture).
 
 ## 日志的位置
