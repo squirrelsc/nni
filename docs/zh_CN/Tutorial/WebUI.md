@@ -50,7 +50,7 @@
 
 Trial 可能在训练过程中有大量中间结果。 为了更清楚的理解一些 Trial 的趋势，可以为中间结果图设置过滤。
 
-这样可以发现 Trial 在某个中间结果上会变得更好或更差。 这表明它是一个重要的并相关的中间结果。 如果要仔细查看这个点，可以在 #Intermediate 中输入其 X 坐标。 并输入这个中间结果的指标范围。 In the picture below, we choose the No. 4 intermediate result and set the range of metrics to 0.8-1.
+这样可以发现 Trial 在某个中间结果上会变得更好或更差。 这表明它是一个重要的并相关的中间结果。 如果要仔细查看这个点，可以在 #Intermediate 中输入其 X 坐标。 并输入这个中间结果的指标范围。 在下图中，选择了第 4 个中间结果并将指标范围设置为了 0.8 -1。
 
 ![](../../img/webui-img/filter-intermediate.png)
 ## 查看 Trial 状态
@@ -66,7 +66,7 @@ Trial 可能在训练过程中有大量中间结果。 为了更清楚的理解�
 * 如果要比较某些 Trial，可选择并点击 "Compare" 来查看结果。
 
 ![](../../img/webui-img/select-trial.png) ![](../../img/webui-img/compare.png)
-* Support to search for a specific trial by it's id, status, Trial No. and parameters.
+* 支持通过 id，状态，Trial 编号，和参数搜索。
 
 ![](../../img/webui-img/search-trial.png)
 * 可使用 "Copy as python" 按钮来拷贝 Trial 的参数。
