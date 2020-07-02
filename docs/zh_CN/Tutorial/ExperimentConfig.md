@@ -217,13 +217,13 @@ machineList:
 
 指定同时运行的 Trial 任务的最大数量。
 
-If trialGpuNum is bigger than the free gpu numbers, and the trial jobs running simultaneously can not reach __trialConcurrency__ number, some trial jobs will be put into a queue to wait for gpu allocation.
+如果 trialGpuNum 大于空闲的 GPU 数量，并且并发的 Trial 任务数量还没达到 __trialConcurrency__，Trial 任务会被放入队列，等待分配 GPU 资源。
 
 ### maxExecDuration
 
 可选。 字符串。 默认值：999d。
 
-__maxExecDuration__ specifies the max duration time of an experiment. The unit of the time is {__s__, __m__, __h__, __d__}, which means {_seconds_, _minutes_, _hours_, _days_}.
+__maxExecDuration__ 指定实验的最大执行时间。 时间单位可以是 {__s__, __m__, __h__, __d__}, 分别表示 {_秒_, _分钟_, _小时_, _天_}。
 
 注意：maxExecDuration 设置的是 Experiment 执行的时间，不是 Trial 的。 如果 Experiment 达到了设置的最大时间，Experiment 不会停止，但不会再启动新的 Trial 作业。
 
@@ -249,15 +249,15 @@ NNI 会校验 remote, pai 和 Kubernetes 模式下 NNIManager 与 trialKeeper �
 
 必填。 字符串。
 
-Specifies the platform to run the experiment, including __local__, __remote__, __pai__, __kubeflow__, __frameworkcontroller__.
+指定运行 Experiment 的平台，包括 __local__, __remote__, __pai__, __kubeflow__, __frameworkcontroller__.
 
-* __local__ run an experiment on local ubuntu machine.
+* __local__ 在本机的 ubuntu 上运行 Experiment。
 
-* __remote__ submit trial jobs to remote ubuntu machines, and __machineList__ field should be filed in order to set up SSH connection to remote machine.
+* __remote__ 将任务提交到远程的 ubuntu 上，必须用 __machineList__ 来指定远程的 SSH 连接信息。
 
-* __pai__  submit trial jobs to [OpenPAI](https://github.com/Microsoft/pai) of Microsoft. 更多 OpenPAI 配置，参考 [PAI 模式](../TrainingService/PaiMode.md)。
+* __pai__  提交任务到微软开源的 [OpenPAI](https://github.com/Microsoft/pai) 上。 更多 OpenPAI 配置，参考 [PAI 模式](../TrainingService/PaiMode.md)。
 
-* __kubeflow__ submit trial jobs to [kubeflow](https://www.kubeflow.org/docs/about/kubeflow/), NNI support kubeflow based on normal kubernetes and [azure kubernetes](https://azure.microsoft.com/en-us/services/kubernetes-service/). 详情参考 [Kubeflow 文档](../TrainingService/KubeflowMode.md)
+* __kubeflow__ 提交任务至 [Kubeflow](https://www.kubeflow.org/docs/about/kubeflow/)。 NNI 支持基于 Kubeflow 的 Kubenetes，以及[Azure Kubernetes](https://azure.microsoft.com/en-us/services/kubernetes-service/)。 详情参考 [Kubeflow 文档](../TrainingService/KubeflowMode.md)
 
 * TODO：解释 FrameworkController。
 
@@ -267,7 +267,7 @@ Specifies the platform to run the experiment, including __local__, __remote__, _
 
 指定搜索空间文件的路径，此文件必须在运行 nnictl 的本机。
 
-The only exception that __searchSpacePath__ can be not fulfilled is when `useAnnotation=True`.
+仅在 `useAnnotation=True` 时，才不需要填写 __searchSpacePath__。
 
 ### useAnnotation
 
@@ -275,7 +275,7 @@ The only exception that __searchSpacePath__ can be not fulfilled is when `useAnn
 
 使用 Annotation 分析 Trial 代码并生成搜索空间。
 
-Note: if __useAnnotation__ is true, the searchSpacePath field should be removed.
+注意：如果 __useAnnotation__ 为 true，searchSpacePath 字段会被删除。
 
 ### multiThread
 
@@ -289,7 +289,7 @@ Note: if __useAnnotation__ is true, the searchSpacePath field should be removed.
 
 设置运行 NNI 管理器进程的计算机的 IP 地址。 此字段为可选项，如果没有设置，则会使用 eth0 的 IP 地址。
 
-注意: 可在 NNI 管理器机器上运行 `ifconfig` 来检查 eth0 是否存在。 If not, __nniManagerIp__ is recommended to set explicitly.
+注意: 可在 NNI 管理器机器上运行 `ifconfig` 来检查 eth0 是否存在。 如果没有，建议显式设置 __nniManagerIp__。
 
 ### logDir
 
@@ -313,7 +313,7 @@ Note: if __useAnnotation__ is true, the searchSpacePath field should be removed.
 
 必填。
 
-指定了 Experiment 的 Tuner 算法。有两种方法可设置 Tuner。 One way is to use tuner provided by NNI sdk (built-in tuners), in which case you need to set __builtinTunerName__ and __classArgs__. Another way is to use users' own tuner file, in which case __codeDirectory__, __classFileName__, __className__ and __classArgs__ are needed. *Users must choose exactly one way.*
+指定了 Experiment 的 Tuner 算法。有两种方法可设置 Tuner。 一种方法是使用 NNI SDK 提供的内置 Tuner，在这种情况下，需要设置 __builtinTunerName__ 和 __classArgs__。 另一种方法，是使用用户自定义的 Tuner，需要设置 __codeDirectory__，__classFileName__，__className__ 和 __classArgs__。 *必须选择其中的一种方式。*
 
 #### builtinTunerName
 
@@ -329,7 +329,7 @@ Note: if __useAnnotation__ is true, the searchSpacePath field should be removed.
 
 #### classFileName
 
-如果使用定制 Tuner，则为必需。 File path relative to __codeDir__.
+如果使用定制 Tuner，则为必需。 相对于 __codeDir__ 的文件路径。
 
 指定 Tuner 文件的名称。
 
@@ -355,11 +355,11 @@ Note: if __useAnnotation__ is true, the searchSpacePath field should be removed.
 
 可选。 布尔。 默认值：false。
 
-If __includeIntermediateResults__ is true, the last intermediate result of the trial that is early stopped by assessor is sent to tuner as final result.
+如果 __includeIntermediateResults__ 为 true，最后一个 Assessor 的中间结果会被发送给 Tuner 作为最终结果。
 
 ### assessor
 
-指定 Assessor 算法以运行 Experiment。 与 Tuner 类似，有两种设置 Assessor 的方法。 一种方法是使用 NNI SDK 提供的 Assessor。 Users need to set __builtinAssessorName__ and __classArgs__. Another way is to use users' own assessor file, and users need to set __codeDirectory__, __classFileName__, __className__ and __classArgs__. *Users must choose exactly one way.*
+指定 Assessor 算法以运行 Experiment。 与 Tuner 类似，有两种设置 Assessor 的方法。 一种方法是使用 NNI SDK 提供的 Assessor。 用户需要设置 __builtinAssessorName__ 和 __classArgs__。 另一种方法，是使用自定义的 Assessor，需要设置 __codeDirectory__，__classFileName__，__className__ 和 __classArgs__。 *必须选择其中的一种方式。*
 
 默认情况下，未启用任何 Assessor。
 
@@ -377,7 +377,7 @@ If __includeIntermediateResults__ is true, the last intermediate result of the t
 
 #### classFileName
 
-如果使用定制 Assessor，则为必需。 File path relative to __codeDir__.
+如果使用定制 Assessor，则为必需。 相对于 __codeDir__ 的文件路径。
 
 指定 Assessor 文件的名称。
 
@@ -397,7 +397,7 @@ If __includeIntermediateResults__ is true, the last intermediate result of the t
 
 可选。
 
-指定 Experiment 中的 Advisor 算法。 与 Tuner 和 Assessor 类似，有两种指定 Advisor 的方法。 One way is to use advisor provided by NNI sdk, need to set __builtinAdvisorName__ and __classArgs__. Another way is to use users' own advisor file, and need to set __codeDirectory__, __classFileName__, __className__ and __classArgs__.
+指定 Experiment 中的 Advisor 算法。 与 Tuner 和 Assessor 类似，有两种指定 Advisor 的方法。 一种方法是使用 SDK 提供的 Advisor ，需要设置 __builtinAdvisorName__ 和 __classArgs__。 另一种方法，是使用用户自定义的 Advisor，需要设置 __codeDirectory__，__classFileName__，__className__ 和 __classArgs__。
 
 启用 Advisor 后，将忽略 Tuner 和 Advisor 的设置。
 
@@ -413,7 +413,7 @@ If __includeIntermediateResults__ is true, the last intermediate result of the t
 
 #### classFileName
 
-如果使用定制 Advisor，则为必需。 File path relative to __codeDir__.
+如果使用定制 Advisor，则为必需。 相对于 __codeDir__ 的文件路径。
 
 指定 Advisor 文件的名称。
 
@@ -441,49 +441,49 @@ If __includeIntermediateResults__ is true, the last intermediate result of the t
 
 在 local 和 remote 模式下，需要以下键。
 
-* __command__: Required string. 指定运行 Trial 的命令。
+* __command__：必需字符串。 指定运行 Trial 的命令。
 
-* __codeDir__: Required string. 指定 Trial 文件的目录。 此目录将在 remote 模式下自动上传。
+* __codeDir__：必需字符串。 指定 Trial 文件的目录。 此目录将在 remote 模式下自动上传。
 
-* __gpuNum__: Optional integer. 指定了运行 Trial 进程的 GPU 数量。 默认值为 0。
+* __gpuNum__：可选、整数。 指定了运行 Trial 进程的 GPU 数量。 默认值为 0。
 
 在 PAI 模式下，需要以下键。
 
-* __command__: Required string. 指定运行 Trial 的命令。
+* __command__：必需字符串。 指定运行 Trial 的命令。
 
-* __codeDir__: Required string. 指定 Trial 文件的目录。 目录中的文件将在 PAI 模式下上传。
+* __codeDir__：必需字符串。 指定 Trial 文件的目录。 目录中的文件将在 PAI 模式下上传。
 
-* __gpuNum__: Required integer. 指定了运行 Trial 进程的 GPU 数量。 默认值为 0。
+* __gpuNum__：必需、整数。 指定了运行 Trial 进程的 GPU 数量。 默认值为 0。
 
-* __cpuNum__: Required integer. 指定要在 OpenPAI 容器中使用的 cpu 数。
+* __cpuNum__：必需、整数。 指定要在 OpenPAI 容器中使用的 cpu 数。
 
-* __memoryMB__: Required integer. 设置要在 OpenPAI 容器中使用的内存大小，以兆字节为单位。
+* __memoryMB__：必需、整数。 设置要在 OpenPAI 容器中使用的内存大小，以兆字节为单位。
 
-* __image__: Required string. 设置要在 OpenPAI 中使用的 Docker 映像。
+* __image__：必需、字符串。 设置要在 OpenPAI 中使用的 Docker 映像。
 
-* __authFile__: Optional string. 用于提供 Docker 注册，用于为 OpenPAI 中的映像拉取请求进行身份验证。 [参考](https://github.com/microsoft/pai/blob/2ea69b45faa018662bc164ed7733f6fdbb4c42b3/docs/faq.md#q-how-to-use-private-docker-registry-job-image-when-submitting-an-openpai-job)。
+* __authFile__：可选、字符串。 用于提供 Docker 注册，用于为 OpenPAI 中的映像拉取请求进行身份验证。 [参考](https://github.com/microsoft/pai/blob/2ea69b45faa018662bc164ed7733f6fdbb4c42b3/docs/faq.md#q-how-to-use-private-docker-registry-job-image-when-submitting-an-openpai-job)。
 
-* __shmMB__: Optional integer. 容器的共享内存大小。
+* __shmMB__：可选、整数。 容器的共享内存大小。
 
-* __portList__: List of key-values pairs with `label`, `beginAt`, `portNumber`. 参考[ OpenPAI Job 教程](https://github.com/microsoft/pai/blob/master/docs/job_tutorial.md)。
+* __portList__: `label`, `beginAt`, `portNumber` 的键值对 list。 参考[ OpenPAI Job 教程](https://github.com/microsoft/pai/blob/master/docs/job_tutorial.md)。
 
 在 Kubeflow 模式下，需要以下键。
 
-* __codeDir__: The local directory where the code files are in.
+* __codeDir__ 指定了代码文件的本机路径。
 
-* __ps__: An optional configuration for kubeflow's tensorflow-operator, which includes
+* __ps__: Kubeflow 的 tensorflow-operator 的可选配置，包括：
 
-    * __replicas__: The replica number of __ps__ role.
+    * __replicas__: __ps__ 角色的副本数量。
 
-    * __command__: The run script in __ps__'s container.
+    * __command__: __ps__ 容器中运行的脚本。
 
-    * __gpuNum__: The gpu number to be used in __ps__ container.
+    * __gpuNum__: __ps__ 容器中使用的 GPU 数量。
 
-    * __cpuNum__: The cpu number to be used in __ps__ container.
+    * __cpuNum__: __ps__ 容器中使用的 CPU 数量。
 
-    * __memoryMB__: The memory size of the container.
+    * __memoryMB__: 容器中使用的内存数量。
 
-    * __image__: The image to be used in __ps__.
+    * __image__: __ps__ 使用的映像。
 
 * __worker__: An optional configuration for kubeflow's tensorflow-operator.
 
