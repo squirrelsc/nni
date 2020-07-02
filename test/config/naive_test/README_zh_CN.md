@@ -6,7 +6,7 @@
 
 ## 详细说明
 * 这是测试 Trial 和 Tuner、Assessor 之间通信的测试用例。
-* The naive trials receive an integer `x` as parameter, and reports `x`, `x²`, `x³`, ... , `x¹⁰` as metrics.
+* Trial 会收到整数 `x` 作为参数，并返回 `x`, `x²`, `x³`, ... , `x¹⁰`。
 * Tuner 会简单的生成自然数序列，并将收到的指标输出到 `tuner_result.txt`。
 * 当 `sum(metrics) % 11 == 1` 时，Assessor 会终止 Trial，并将终止的 Trial 输出到 `assessor_result.txt`。
 * 当 Tuner 和 Assessor 发生异常时，会在相应的文件中输出 `ERROR`。
