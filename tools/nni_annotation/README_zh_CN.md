@@ -28,8 +28,8 @@ NNI 中，有 4 种类型的 Annotation；
 
 **参数**
 
-- **sampling_algo**: Sampling algorithm that specifies a search space. 可将其换成 NNI 支持的其它采样函数，函数要以 `nni.` 开头。例如，`choice` 或 `uniform`，详见 [SearchSpaceSpec](https://nni.readthedocs.io/zh/latest/Tutorial/SearchSpaceSpec.html)。
-- **name**: The name of the variable that the selected value will be assigned to. 注意，此参数应该与下面一行等号左边的值相同。
+- **sampling_algo**: 指定搜索空间的采样算法。 可将其换成 NNI 支持的其它采样函数，函数要以 `nni.` 开头。例如，`choice` 或 `uniform`，详见 [SearchSpaceSpec](https://nni.readthedocs.io/zh/latest/Tutorial/SearchSpaceSpec.html)。
+- **name**: 将被赋值的变量名称。 注意，此参数应该与下面一行等号左边的值相同。
 
 NNI 支持如下 10 种类型来表示搜索空间：
 
@@ -59,8 +59,8 @@ learning_rate = 0.1
 
 **参数**
 
-- **functions**: Several functions that are waiting to be selected from. 注意，必须是包括参数的完整函数调用。 例如 `max_pool(hidden_layer, pool_size)`。
-- **name**: The name of the function that will be replaced in the following assignment statement.
+- **functions**: 可选择的函数。 注意，必须是包括参数的完整函数调用。 例如 `max_pool(hidden_layer, pool_size)`。
+- **name**: 将被替换的函数名称。
 
 例如：
 
