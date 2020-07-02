@@ -15,7 +15,7 @@
 
 ## 实验说明
 
-To avoid over-fitting in **CIFAR-10**, we also compare the models in the other five datasets including Fashion-MNIST, CIFAR-100, OUI-Adience-Age, ImageNet-10-1 (subset of ImageNet), ImageNet-10-2 (another subset of ImageNet). 分别从 ImageNet 中抽取 10 种不同类别标签的子集，组成 ImageNet10-1 和 ImageNet10-2 数据集 。
+为了避免算法仅仅在 **CIFAR-10** 数据集上过拟合，还对比了包括 Fashion-MNIST, CIFAR-100, OUI-Adience-Age, ImageNet-10-1 (ImageNet的子集) 和 ImageNet-10-2 (ImageNet 的另一个子集) 在内的其它 5 个数据集。 分别从 ImageNet 中抽取 10 种不同类别标签的子集，组成 ImageNet10-1 和 ImageNet10-2 数据集 。
 
 | 数据集                                                                                     | 训练数据集大小 | 类别标签数 | 数据集说明                                                       |
 |:--------------------------------------------------------------------------------------- | ------- | ----- | ----------------------------------------------------------- |
@@ -30,7 +30,7 @@ To avoid over-fitting in **CIFAR-10**, we also compare the models in the other f
 
 没有改变源码中的 Fine-tuning 方法。 为了匹配每个任务，改变了源码中模型的输入图片大小和输出类别数目的部分。
 
-Search phase time for all NAS methods is **two days** as well as the retrain time.  Average results are reported based on **three repeat times**. 评估计算机有一块 Nvidia Tesla P100 GPU、112GB 内存和 2.60GHz CPU (Intel E5-2690)。
+所有 NAS 方法模型搜索时间和重训练时间都是**两天**。  所有结果都是基于**三次重复实验**。 评估计算机有一块 Nvidia Tesla P100 GPU、112GB 内存和 2.60GHz CPU (Intel E5-2690)。
 
 NAO 需要太多的计算资源，因此只使用提供 Pipeline 脚本的 NAO-WS。
 
