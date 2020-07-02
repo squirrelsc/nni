@@ -32,13 +32,13 @@ python -m pip install --upgrade nni
 
 NNI 是一个能进行自动机器学习实验的工具包。 它可以自动进行获取超参、运行 Trial，测试结果，调优超参的循环。 在这里，将演示如何使用 NNI 帮助找到 MNIST 模型的最佳超参数。
 
-Here is an example script to train a CNN on the MNIST dataset **without NNI**:
+这是还**没有 NNI** 的示例代码，用 CNN 在 MNIST 数据集上训练：
 
 ```python
 def run_trial(params):
-    # Input data
+    # 输入数据
     mnist = input_data.read_data_sets(params['data_dir'], one_hot=True)
-    # Build network
+    # 构建网络
     mnist_network = MnistNetwork(channel_1_num=params['channel_1_num'],
                                  channel_2_num=params['channel_2_num'],
                                  conv_size=params['conv_size'],
@@ -49,9 +49,9 @@ def run_trial(params):
 
     test_acc = 0.0
     with tf.Session() as sess:
-        # Train network
+        # 训练网络
         mnist_network.train(sess, mnist)
-        # Evaluate network
+        # 评估网络
         test_acc = mnist_network.evaluate(mnist)
 
 if __name__ == '__main__':
@@ -91,7 +91,7 @@ NNI 用来帮助超参调优。它的流程如下：
 
 ### 启动 Experiment 的三个步骤
 
-**Step 1**: Write a `Search Space` file in JSON, including the `name` and the `distribution` (discrete-valued or continuous-valued) of all the hyperparameters you need to search.
+**第一步**：编写 JSON 格式的`搜索空间`文件，包括所有需要搜索的超参的`名称`和`分布`（离散和连续值均可）。
 
 ```diff
 -   params = {'data_dir': '/tmp/tensorflow/mnist/input_data', 'dropout_rate': 0.5, 'channel_1_num': 32, 'channel_2_num': 64,
@@ -107,7 +107,7 @@ NNI 用来帮助超参调优。它的流程如下：
 
 *示例：[search_space.json](https://github.com/Microsoft/nni/tree/master/examples/trials/mnist-tfv1/search_space.json)*
 
-**Step 2**: Modify your `Trial` file to get the hyperparameter set from NNI and report the final result to NNI.
+**第二步**：修改 `Trial` 代码来从 NNI 获取超参，并返回 NNI 最终结果。
 
 ```diff
 + import nni
