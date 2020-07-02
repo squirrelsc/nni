@@ -18,15 +18,15 @@ NNI 支持在 [OpenPAI](https://github.com/Microsoft/pai) 上运行 Experiment�
 
   找到作业提交页面中的数据管理部分。 ![](../../img/pai_data_management_page.jpg)
 
-The `Preview container paths` is the NFS host and path that OpenPAI provided, you need to mount the corresponding host and path to your local machine first, then NNI could use the OpenPAI's NFS storage.  
-For example, use the following command:
+`Preview container paths` 是 API 提供的 NFS 主机和路径，需要将对应的位置挂载到本机，然后 NNI 才能使用 NFS 存储。  
+例如，使用下列命令：
 
 ```bash
 sudo mount -t nfs4 gcr-openpai-infra02:/pai/data /local/mnt
 ```
 
-Then the `/data` folder in container will be mounted to `/local/mnt` folder in your local machine.  
-You could use the following configuration in your NNI's config file:
+然后容器中的 `/data` 路径会被挂载到本机的 `/local/mnt` 文件夹  
+然后在 NNI 的配置文件中如下配置：
 
 ```yaml
 nniManagerNFSMountPath: /local/mnt
@@ -128,7 +128,7 @@ paiConfig:
   如果在 NNI 配置文件中设置了 `paiConfigPath`，则不需在 `trial` 配置中设置 `command`, `paiStorageConfigName`, `virtualCluster`, `image`, `memoryMB`, `cpuNum`, `gpuNum`。 这些字段将使用 `paiConfigPath` 指定的配置文件中的值。
 
   注意：
-  1. The job name in OpenPAI's configuration file will be replaced by a new job name, the new job name is created by NNI, the name format is nni_exp_${this.experimentId}_trial_${trialJobId}.
+  1. OpenPAI 配置文件中的作业名称会由 NNI 指定，格式为：nni_exp_${this.experimentId}_trial_${trialJobId}。
 
   2. 如果在 OpenPAI 配置文件中有多个 taskRoles，NNI 会将这些 taksRoles 作为一个 Trial 任务，用户需要确保只有一个 taskRole 会将指标上传到 NNI 中，否则可能会产生错误。
 
@@ -174,10 +174,10 @@ nnictl create --config exp_pai.yml
 使用 NNI 启动 Experiment 前，应在 nniManager 计算机中设置相应的挂载数据的路径。 OpenPAI 有自己的存储（NFS、AzureBlob ...），在 OpenPAI 中使用的存储将在启动作业时挂载到容器中。 应通过 `paiStorageConfigName` 字段选择 OpenPAI 中的存储类型。 然后，应将存储挂载到 nniManager 计算机上，并在配置文件中设置 `nniManagerNFSMountPath`，NNI会生成 bash 文件并将 `codeDir` 中的数据拷贝到 `nniManagerNFSMountPath` 文件夹中，然后启动 Trial 任务。 `nniManagerNFSMountPath` 中的数据会同步到 OpenPAI 存储中，并挂载到 OpenPAI 的容器中。 容器中的数据路径在 `containerNFSMountPath` 设置，NNI 将进入该文件夹，运行脚本启动 Trial 任务。
 
 ## 版本校验
-NNI support version check feature in since version 0.6. It is a policy to insure the version of NNIManager is consistent with trialKeeper, and avoid errors caused by version incompatibility. 检查策略：
+从 0.6 开始，NNI 支持版本校验。 确保 NNIManager 与 trialKeeper 的版本一致，避免兼容性错误。 检查策略：
 
 1. 0.6 以前的 NNIManager 可与任何版本的 trialKeeper 一起运行，trialKeeper 支持向后兼容。
 2. 从 NNIManager 0.6 开始，与 triakKeeper 的版本必须一致。 例如，如果 NNIManager 是 0.6 版，则 trialKeeper 也必须是 0.6 版。
-3. Note that the version check feature only check first two digits of version.For example, NNIManager v0.6.1 could use trialKeeper v0.6 or trialKeeper v0.6.2, but could not use trialKeeper v0.5.1 or trialKeeper v0.7.
+3. 注意，只有版本的前两位数字才会被检查。例如，NNIManager 0.6.1 可以和 trialKeeper 的 0.6 或 0.6.2 一起使用，但不能与 trialKeeper 的 0.5.1 或 0.7 版本一起使用。
 
 如果 Experiment 无法运行，而且不能确认是否是因为版本不匹配造成的，可以在 Web 界面检查是否有相关的错误消息。 ![](../../img/version_check.png)
