@@ -20,12 +20,12 @@ from nni.feature_engineering.gradient_selector import FeatureGradientSelector
 ...
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)
 
-# initlize a selector
+# 初始化 Selector
 fgs = FeatureGradientSelector(...)
-# fit data
+# 拟合数据
 fgs.fit(X_train, y_train)
-# get improtant features
-# will return the index with important feature here.
+# 获得重要特征
+# 此处会返回重要特征的索引。
 print(fgs.get_selected_features(...))
 
 ...
@@ -98,7 +98,7 @@ class CustomizedSelector(FeatureSelector):
 
 **3. 与 sklearn 集成**
 
-`sklearn.pipeline.Pipeline` can connect models in series, such as feature selector, normalization, and classification/regression to form a typical machine learning problem workflow. 下列步骤可帮助集成 sklearn，将定制的特征 Selector 作为管道的模块。
+`sklearn.pipeline.Pipeline` 可将模型连接在一起，例如特征选择，规范化，以及分类、回归，来组成一个典型的机器学习问题工作流。 下列步骤可帮助集成 sklearn，将定制的特征 Selector 作为管道的模块。
 
 1. Inherit the calss _sklearn.base.BaseEstimator_
 1. 实现 _BaseEstimator_ 中的 _get_params_ 和 _set_params_ 函数
