@@ -3,7 +3,7 @@
 此页为常见问题
 
 ### tmp 目录没空间了
-nnictl 在执行时，使用 tmp 目录作为临时目录来复制 codeDir 下的文件。 When met errors like below, try to clean up **tmp** folder first.
+nnictl 在执行时，使用 tmp 目录作为临时目录来复制 codeDir 下的文件。 当遇到下列错误时，先试试清空 **tmp** 目录。
 > OSError: [Errno 28] No space left on device
 
 ### OpenPAI 模式下无法获得 Trial 的数据
@@ -37,10 +37,10 @@ nnictl 在执行时，使用 tmp 目录作为临时目录来复制 codeDir 下�
 
 ### RESTful 服务器启动失败
 
-Probably it's a problem with your network config. Here is a checklist.
+可能是网络配置的问题。 这是检查清单。
 
 * 可能需要链接 `127.0.0.1` 与 `localhost`。 在 `/etc/hosts` 中增加 `127.0.0.1 localhost`。
-* It's also possible that you have set some proxy config. Check your environment for variables like `HTTP_PROXY` or `HTTPS_PROXY` and unset if they are set.
+* 也可能是有一些代理设置。 检查环境中是否有如 `HTTP_PROXY` 或 `HTTPS_PROXY` 的变量，如果有，则需要取消。
 
 
 ### NNI 在 Windows 上的问题
