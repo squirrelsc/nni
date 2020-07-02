@@ -36,7 +36,7 @@
 ~~~~
 将改动保存到 `mnist.py` 文件中。
 
-**NOTE**:
+**注意**:
 ~~~~
 accuracy - 如果使用 NNI 内置的 Tuner/Assessor，那么 `accuracy` 必须是数值（如 float, int）。在定制 Tuner/Assessor 时 `accuracy` 可以是任何类型的 Python 对象。
 Assessor（评估器）- 会根据 Trial 的历史值（即其中间结果），来决定这次 Trial 是否应该提前终止。
@@ -57,7 +57,7 @@ Tuner（调参器） - 会根据探索的历史（所有 Trial 的最终结果�
 > 第三步：定义 Experiment
 > > 3.1 启用 NNI API 模式
 
-To enable NNI API mode, you need to set useAnnotation to *false* and provide the path of SearchSpace file (you just defined in step 1):
+要启用 NNI 的 API 模式，需要将 useAnnotation 设置为 *false*，并提供搜索空间文件的路径（即第一步中定义的文件）：
 
 ```
 useAnnotation: false
@@ -71,7 +71,7 @@ searchSpacePath: /path/to/your/search_space.json
 * 准备 YAML 的 Experiment 配置文件
 * (可选) 实现或选择 Assessor
 
-**Prepare trial**:
+**准备 Trial**:
 > 在克隆代码后，可以在 ~/nni/examples 中找到一些示例，运行 `ls examples/trials` 查看所有 Trial 示例。
 
 先从 NNI 提供的简单 Trial 示例，如 MNIST 开始。 NNI 示例在代码目录的 examples 中，运行 `ls ~/nni/examples/trials` 可以看到所有 Experiment 的示例。 执行下面的命令可轻松运行 NNI 的 mnist 示例：
@@ -80,16 +80,16 @@ searchSpacePath: /path/to/your/search_space.json
 
 上面的命令会写在 YAML 文件中。 参考[这里](../TrialExample/Trials.md)来写出自己的 Experiment 代码。
 
-**Prepare tuner**: NNI supports several popular automl algorithms, including Random Search, Tree of Parzen Estimators (TPE), Evolution algorithm etc. 也可以实现自己的 Tuner（参考[这里](../Tuner/CustomizeTuner.md)）。下面使用了 NNI 内置的 Tuner：
+**准备 Tuner**: NNI 支持多种流行的自动机器学习算法，包括：Random Search（随机搜索），Tree of Parzen Estimators (TPE)，Evolution（进化算法）等等。 也可以实现自己的 Tuner（参考[这里](../Tuner/CustomizeTuner.md)）。下面使用了 NNI 内置的 Tuner：
 
       tuner:
         builtinTunerName: TPE
         classArgs:
           optimize_mode: maximize
 
-*builtinTunerName* is used to specify a tuner in NNI, *classArgs* are the arguments pass to the tuner (the spec of builtin tuners can be found [here](../Tuner/BuiltinTuner.md)), *optimization_mode* is to indicate whether you want to maximize or minimize your trial's result.
+*builtinTunerName* 用来指定 NNI 中的 Tuner，*classArgs* 是传入到 Tuner的参数（内置 Tuner 在[这里](../Tuner/BuiltinTuner.md)），*optimization_mode* 表明需要最大化还是最小化 Trial 的结果。
 
-**Prepare configure file**: Since you have already known which trial code you are going to run and which tuner you are going to use, it is time to prepare the YAML configure file. NNI 为每个 Trial 示例都提供了演示的配置文件，用命令`cat ~/nni/examples/trials/mnist-annotation/config.yml` 来查看其内容。 大致内容如下：
+**准备配置文件**：实现 Trial 的代码，并选择或实现自定义的 Tuner 后，就要准备 YAML 配置文件了。 NNI 为每个 Trial 示例都提供了演示的配置文件，用命令`cat ~/nni/examples/trials/mnist-annotation/config.yml` 来查看其内容。 大致内容如下：
 
 ```yaml
 authorName: your_name
@@ -122,21 +122,21 @@ trial:
   gpuNum: 0
 ```
 
-Here *useAnnotation* is true because this trial example uses our python annotation (refer to [here](../Tutorial/AnnotationSpec.md) for details). For trial, we should provide *trialCommand* which is the command to run the trial, provide *trialCodeDir* where the trial code is. 命令会在此目录中执行。 同时，也需要提供每个 Trial 进程所需的 GPU 数量。
+因为这个 Trial 代码使用了 NNI Annotation 的方法（参考[这里](../Tutorial/AnnotationSpec.md) ），所以*useAnnotation* 为 true。 *command* 是运行 Trial 代码所需要的命令，*codeDir* 是 Trial 代码的相对位置。 命令会在此目录中执行。 同时，也需要提供每个 Trial 进程所需的 GPU 数量。
 
 完成上述步骤后，可通过下列命令来启动 Experiment：
 
       nnictl create --config ~/nni/examples/trials/mnist-annotation/config.yml
 
-You can refer to [here](../Tutorial/Nnictl.md) for more usage guide of *nnictl* command line tool.
+参考[这里](../Tutorial/Nnictl.md)来了解 *nnictl* 命令行工具的更多用法。
 
 ## 查看 Experiment 结果
-Experiment 应该一直在运行。 Other than *nnictl*, NNI also provides WebUI for you to view experiment progress, to control your experiment, and some other appealing features.
+Experiment 应该一直在运行。 除了 *nnictl* 以外，还可以通过 NNI 的网页来查看 Experiment 进程，进行控制和其它一些有意思的功能。
 
 ## 使用多个本地 GPU 加快搜索速度
 下列步骤假设本机有 4 块 NVIDIA GPUs，参考 [tensorflow with GPU support](https://www.tensorflow.org/install/gpu)。 演示启用了 4 个并发的 Trial 任务，每个 Trial 任务使用了 1 块 GPU。
 
-**Prepare configure file**: NNI provides a demo configuration file for the setting above, `cat ~/nni/examples/trials/mnist-annotation/config_gpu.yml` to see it. trailConcurrency 和 gpuNum 与基本配置文件不同：
+**准备配置文件**：NNI 提供了演示用的配置文件，使用 `cat examples/trials/mnist-annotation/config_gpu.yml` 来查看。 trailConcurrency 和 gpuNum 与基本配置文件不同：
 
 ```
 ...
@@ -156,4 +156,4 @@ trial:
 
       nnictl create --config ~/nni/examples/trials/mnist-annotation/config_gpu.yml
 
-You can use *nnictl* command line tool or WebUI to trace the training progress. *nvidia_smi* command line tool can also help you to monitor the GPU usage during training.
+可以用 *nnictl* 命令行工具或网页界面来跟踪训练过程。 *nvidia_smi* 命令行工具能在训练过程中查看 GPU 使用情况。
