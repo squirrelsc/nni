@@ -4,7 +4,7 @@
 
 当用户需要在 NNI 上运行 Trial 时，需要：
 
-**1)Have an original Trial could run**,
+**1) 写好原始的训练代码**。
 
 Trial 的代码可以是任何能在本机运行的机器学习代码。 这里使用 `mnist-keras. py` 作为示例：
 
@@ -86,7 +86,7 @@ if __name__ == '__main__':
 
 **2) 从 Tuner 获取配置**
 
-导入 `NNI` 并用 `nni.get_next_parameter()` 来接收参数。 Please noted **10**, **24** and **25** line in the following code.
+导入 `NNI` 并用 `nni.get_next_parameter()` 来接收参数。 注意代码中的 **10**, **24** 和 **25** 行。
 
 
 ```python
@@ -121,7 +121,7 @@ if __name__ == '__main__':
 
 **3)  发送中间结果**
 
-用 `nni.report_intermediate_result` 将中间结果发送给 Assessor。 Please noted **5** line in the following code.
+用 `nni.report_intermediate_result` 将中间结果发送给 Assessor。 注意第 **5** 行。
 
 
 ```python
@@ -144,7 +144,7 @@ def train(args, params):
 ```
 **4) 发送最终结果**
 
-用 `nni.report_final_result` 将最终结果发送给 Tuner。 Please noted **15** line in the following code.
+用 `nni.report_final_result` 将最终结果发送给 Tuner。 注意第 **15** 行。
 
 ```python
 ...
@@ -189,7 +189,7 @@ NUM_CLASSES = 10
 
 def create_mnist_model(hyper_params, input_shape=(H, W, 1), num_classes=NUM_CLASSES):
     '''
-    Create simple convolutional model
+    创建简单的卷积模型
     '''
     layers = [
         Conv2D(32, kernel_size=(3, 3), activation='relu', input_shape=input_shape),
@@ -212,7 +212,7 @@ def create_mnist_model(hyper_params, input_shape=(H, W, 1), num_classes=NUM_CLAS
 
 def load_mnist_data(args):
     '''
-    Load MNIST dataset
+    加载 MNIST 数据集
     '''
     (x_train, y_train), (x_test, y_test) = mnist.load_data()
 
@@ -228,18 +228,18 @@ def load_mnist_data(args):
 
 class SendMetrics(keras.callbacks.Callback):
     '''
-    Keras callback to send metrics to NNI framework
+    通过 Keras 回调将指标传给 NNI
     '''
     def on_epoch_end(self, epoch, logs={}):
         '''
-        Run on end of each epoch
+        在每个 Epoch 结束时运行
         '''
         LOG.debug(logs)
         nni.report_intermediate_result(logs)
 
 def train(args, params):
     '''
-    Train model
+    训练模型
     '''
     x_train, y_train, x_test, y_test = load_mnist_data(args)
     model = create_mnist_model(params)
@@ -253,7 +253,7 @@ def train(args, params):
 
 def generate_default_params():
     '''
-    Generate default hyper parameters
+    生成默认超参
     '''
     return {
         'optimizer': 'Adam',
@@ -270,12 +270,12 @@ if __name__ == '__main__':
     ARGS, UNKNOWN = PARSER.parse_known_args()
 
     try:
-        # get parameters from tuner
+        # 从 Tuner 中获得参数
         RECEIVED_PARAMS = nni.get_next_parameter()
         LOG.debug(RECEIVED_PARAMS)
         PARAMS = generate_default_params()
         PARAMS.update(RECEIVED_PARAMS)
-        # train
+        # 训练
         train(ARGS, PARAMS)
     except Exception as e:
         LOG.exception(e)
