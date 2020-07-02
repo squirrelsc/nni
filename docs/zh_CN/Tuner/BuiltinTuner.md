@@ -2,7 +2,7 @@
 
 NNI 提供了先进的调优算法，使用上也很简单。 下面是内置 Tuner 的简单介绍：
 
-Note: Click the **Tuner's name** to get the Tuner's installation requirements, suggested scenario, and an example configuration. 算法的详细说明在每个 Tuner 建议场景的最后。 [本文](../CommunitySharings/HpoComparision.md)对比了不同 Tuner 在几个问题下的不同效果。
+注意：点击 **Tuner 的名称**可看到 Tuner 的安装需求，建议的场景以及示例。 算法的详细说明在每个 Tuner 建议场景的最后。 [本文](../CommunitySharings/HpoComparision.md)对比了不同 Tuner 在几个问题下的不同效果。
 
 当前支持的算法：
 
@@ -25,7 +25,7 @@ Note: Click the **Tuner's name** to get the Tuner's installation requirements, s
 
 ## 用法
 
-Using a built-in tuner provided by the NNI SDK requires one to declare the  **builtinTunerName** and **classArgs** in the `config.yml` file. 本部分中，将介绍每个 Tuner 的用法和建议场景、参数要求，并提供配置示例。
+要使用 NNI 内置的 Tuner，需要在 **config.yml</code> 文件中添加 **builtinTunerName** 和 **classArgs**。 本部分中，将介绍每个 Tuner 的用法和建议场景、参数要求，并提供配置示例。</p>
 
 注意：参考示例中的格式来创建新的 `config.yml` 文件。 一些内置的 Tuner 还需要通过 `nnictl package` 命令先安装，如 SMAC。
 
@@ -33,7 +33,7 @@ Using a built-in tuner provided by the NNI SDK requires one to declare the  **bu
 
 ### TPE
 
-> Built-in Tuner Name: **TPE**
+> 名称：**TPE**
 
 **建议场景**
 
@@ -42,7 +42,7 @@ TPE 是一种黑盒优化方法，可以使用在各种场景中，通常情况�
 
 **classArgs 要求：**
 
-* **optimize_mode** (*maximize or minimize, optional, default = maximize*) - If 'maximize', the tuner will try to maximize metrics. 如果为 'minimize'，表示 Tuner 的目标是将指标最小化。
+* **optimize_mode** (*maximize 或 minimize, 可选项, 默认值为 maximize*) - 如果为 'maximize'，表示 Tuner 会试着最大化指标。 如果为 'minimize'，表示 Tuner 的目标是将指标最小化。
 
 注意：为实现大规模并发 Trial，TPE 的并行性得到了优化。 有关优化原理或开启优化，参考 [TPE 文档](HyperoptTuner.md)。
 
@@ -62,7 +62,7 @@ tuner:
 
 ### Random Search（随机搜索）
 
-> Built-in Tuner Name: **Random**
+> 名称：**Random**
 
 **建议场景**
 
@@ -82,7 +82,7 @@ tuner:
 
 ### Anneal（退火算法）
 
-> Built-in Tuner Name: **Anneal**
+> 名称：**Anneal**
 
 **建议场景**
 
@@ -91,7 +91,7 @@ tuner:
 
 **classArgs 要求：**
 
-* **optimize_mode** (*maximize or minimize, optional, default = maximize*) - If 'maximize', the tuner will try to maximize metrics. 如果为 'minimize'，表示 Tuner 的目标是将指标最小化。
+* **optimize_mode** (*maximize 或 minimize, 可选项, 默认值为 maximize*) - 如果为 'maximize'，表示 Tuner 会试着最大化指标。 如果为 'minimize'，表示 Tuner 的目标是将指标最小化。
 
 **配置示例：**
 
@@ -109,7 +109,7 @@ tuner:
 
 ### Naïve Evolution（进化算法）
 
-> Built-in Tuner Name: **Evolution**
+> 名称：**Evolution**
 
 **建议场景**
 
@@ -117,9 +117,9 @@ tuner:
 
 **classArgs 要求：**
 
-* **optimize_mode** (*maximize or minimize, optional, default = maximize*) - If 'maximize', the tuner will try to maximize metrics. 如果为 'minimize'，表示 Tuner 的目标是将指标最小化。
+* **optimize_mode** (*maximize 或 minimize, 可选项, 默认值为 maximize*) - 如果为 'maximize'，表示 Tuner 会试着最大化指标。 如果为 'minimize'，表示 Tuner 的目标是将指标最小化。
 
-* **population_size** (*int value (should > 0), optional, default = 20*) - the initial size of the population (trial num) in the evolution tuner. 建议 `population_size` 比 `concurrency` 取值更大，这样能充分利用算法（至少要等于 `concurrency`，否则 Tuner 在生成第一代参数的时候就会失败）。
+* **population_size** (*int 类型 (需要大于 0), 可选项, 默认值为 20*) - 表示遗传 Tuner 中的初始种群（Trial 数量）。 建议 `population_size` 比 `concurrency` 取值更大，这样能充分利用算法（至少要等于 `concurrency`，否则 Tuner 在生成第一代参数的时候就会失败）。
 
 **配置示例：**
 
@@ -138,7 +138,7 @@ tuner:
 
 ### SMAC
 
-> Built-in Tuner Name: **SMAC**
+> 名称：**SMAC**
 
 **当前 SMAC 不支持在 WIndows 下运行。 原因参考：[GitHub issue](https://github.com/automl/SMAC3/issues/483)。**
 
@@ -156,8 +156,8 @@ nnictl package install --name=SMAC
 
 **classArgs 要求：**
 
-* **optimize_mode** (*maximize or minimize, optional, default = maximize*) - If 'maximize', the tuner will try to maximize metrics. 如果为 'minimize'，表示 Tuner 的目标是将指标最小化。
-* **config_dedup** (*True or False, optional, default = False*) - If True, the tuner will not generate a configuration that has been already generated. 如果为 False，则配置可能会重复生成，但对于相对较大的搜索空间，此概率较小。
+* **optimize_mode** (*maximize 或 minimize, 可选项, 默认值为 maximize*) - 如果为 'maximize'，表示 Tuner 会试着最大化指标。 如果为 'minimize'，表示 Tuner 的目标是将指标最小化。
+* **config_dedup** (*True 或 False, 可选, 默认为 False*) - 如果为 True，则 Tuner 不会生成重复的配置。 如果为 False，则配置可能会重复生成，但对于相对较大的搜索空间，此概率较小。
 
 **配置示例：**
 
@@ -214,7 +214,7 @@ tuner:
 
 ### Grid Search（遍历搜索）
 
-> Built-in Tuner Name: **Grid Search**
+> 名称：**Grid Search**
 
 **建议场景**
 
@@ -236,7 +236,7 @@ tuner:
 
 ### Hyperband
 
-> Built-in Advisor Name: **Hyperband**
+> 名称：**Hyperband**
 
 **建议场景**
 
@@ -244,9 +244,9 @@ tuner:
 
 **classArgs 要求：**
 
-* **optimize_mode** (*maximize or minimize, optional, default = maximize*) - If 'maximize', the tuner will try to maximize metrics. 如果为 'minimize'，表示 Tuner 的目标是将指标最小化。
-* **R** (*int, optional, default = 60*) - the maximum budget given to a trial (could be the number of mini-batches or epochs). 每个 Trial 都需要用 TRIAL_BUDGET 来控制运行的步数。
-* **eta** (*int, optional, default = 3*) - `(eta-1)/eta` is the proportion of discarded trials.
+* **optimize_mode** (*maximize 或 minimize, 可选项, 默认值为 maximize*) - 如果为 'maximize'，表示 Tuner 会试着最大化指标。 如果为 'minimize'，表示 Tuner 的目标是将指标最小化。
+* **R** (*int, 可选, 默认为 60*) - 分配给 Trial 的最大资源（可以是 mini-batches 或 epochs 的数值）。 每个 Trial 都需要用 TRIAL_BUDGET 来控制运行的步数。
+* **eta** (*int, 可选, 默认为 3*) - `(eta-1)/eta` 是丢弃 Trial 的比例。
 
 **配置示例：**
 
@@ -266,7 +266,7 @@ advisor:
 
 ### Network Morphism
 
-> Built-in Tuner Name: **NetworkMorphism**
+> 名称：**NetworkMorphism**
 
 **安装**
 
@@ -278,11 +278,11 @@ NetworkMorphism 需要先安装 [PyTorch](https://pytorch.org/get-started/locall
 
 **classArgs 要求：**
 
-* **optimize_mode** (*maximize or minimize, optional, default = maximize*) - If 'maximize', the tuner will try to maximize metrics. 如果为 'minimize'，表示 Tuner 的目标是将指标最小化。
-* **task** (*('cv'), optional, default = 'cv'*) - The domain of the experiment. 当前，此 Tuner 仅支持计算机视觉（cv）领域。
-* **input_width** (*int, optional, default = 32*) - input image width
-* **input_channel** (*int, optional, default = 3*) - input image channel
-* **n_output_node** (*int, optional, default = 10*) - number of classes
+* **optimize_mode** (*maximize 或 minimize, 可选项, 默认值为 maximize*) - 如果为 'maximize'，表示 Tuner 会试着最大化指标。 如果为 'minimize'，表示 Tuner 的目标是将指标最小化。
+* **task** (*('cv'), 可选, 默认为 'cv'*) - 实验的领域。 当前，此 Tuner 仅支持计算机视觉（cv）领域。
+* **input_width** (*int, 可选, 默认为 = 32*) - 输入图像的宽度
+* **input_channel** (*int, 可选, 默认为 3*) - 输入图像的通道数
+* **n_output_node** (*int, 可选, 默认为 10*) - 输出分类的数量
 
 **配置示例：**
 
@@ -304,7 +304,7 @@ tuner:
 
 ### Metis Tuner
 
-> Built-in Tuner Name: **MetisTuner**
+> 名称：**MetisTuner**
 
 此 Tuner 搜索空间仅接受 `quniform`，`uniform`，`randint` 和数值的 `choice` 类型。 因为数值会被用来评估点之间的距离，所以只支持数值。
 
@@ -314,7 +314,7 @@ tuner:
 
 **classArgs 要求：**
 
-* **optimize_mode** (*'maximize' or 'minimize', optional, default = 'maximize'*) - If 'maximize', the tuner will try to maximize metrics. 如果为 'minimize'，表示 Tuner 的目标是将指标最小化。
+* **optimize_mode** (*'maximize' 或 'minimize', 可选项, 默认值为 'maximize'*) - 如果为 'maximize'，表示 Tuner 的目标是将指标最大化。 如果为 'minimize'，表示 Tuner 的目标是将指标最小化。
 
 **配置示例：**
 
@@ -332,7 +332,7 @@ tuner:
 
 ### BOHB Advisor
 
-> Built-in Tuner Name: **BOHB**
+> 名称：**BOHB**
 
 **安装**
 
@@ -348,16 +348,16 @@ nnictl package install --name=BOHB
 
 **classArgs 要求：**
 
-* **optimize_mode** (*maximize or minimize, optional, default = maximize*) - If 'maximize', tuners will try to maximize metrics. 如果为 'minimize'，表示 Tuner 的目标是将指标最小化。
-* **min_budget** (*int, optional, default = 1*) - The smallest budget to assign to a trial job, (budget can be the number of mini-batches or epochs). 该参数必须为正数。
-* **max_budget** (*int, optional, default = 3*) - The largest budget to assign to a trial job, (budget can be the number of mini-batches or epochs). 该参数必须大于“min_budget”。
-* **eta** (*int, optional, default = 3*) - In each iteration, a complete run of sequential halving is executed. 在这里，当一个使用相同计算资源的子集结束后，选择表现前 1/eta 好的参数，给予更高的优先级，进入下一轮比较（会获得更多计算资源）。 该参数必须大于等于 2。
-* **min_points_in_model**(*int, optional, default = None*): number of observations to start building a KDE. 默认值 None 表示 dim+1，当在该计算资源（budget）下试验过的参数已经大于等于`max{dim+1, min_points_in_model}` 时，BOHB 将会开始建立这个计算资源（budget）下对应的核密度估计（KDE）模型，然后用这个模型来指导参数的选取。 该参数必须为正数。 (dim 表示搜索空间中超参的数量)
-* **top_n_percent**(*int, optional, default = 15*): percentage (between 1 and 99) of the observations which are considered good. 区分表现好的点与坏的点是为了建立树形核密度估计模型。 例如，如果有 100 个观察到的 Trial，top_n_percent 为 15，则前 15% 的点将用于构建好点模型 "l(x)"。 其余 85% 的点将用于构建坏点模型 "g(x)"。
-* **num_samples**(*int, optional, default = 64*): number of samples to optimize EI (default 64). 在这种情况下，将对 "num_samples" 点进行采样，并比较 l(x)/g(x) 的结果。 然后，如果 optimize_mode 是 `maximize`，就会返回其中 l(x)/g(x) 值最大的点作为下一个配置参数。 否则，使用值最小的点。
-* **random_fraction**(*float, optional, default = 0.33*): fraction of purely random configurations that are sampled from the prior without the model.
-* **bandwidth_factor**(*float, optional, default = 3.0*): to encourage diversity, the points proposed to optimize EI are sampled from a 'widened' KDE where the bandwidth is multiplied by this factor. 如果不熟悉 KDE，建议使用默认值。
-* **min_bandwidth**(*float, optional, default = 0.001*): to keep diversity, even when all (good) samples have the same value for one of the parameters, a minimum bandwidth (default: 1e-3) is used instead of zero. 如果不熟悉 KDE，建议使用默认值。
+* **optimize_mode** (*maximize 或 minimize, 可选项, 默认值为 maximize*) - 如果为 'maximize'，表示 Tuner 会试着最大化指标。 如果为 'minimize'，表示 Tuner 的目标是将指标最小化。
+* **min_budget** (*整数, 可选项, 默认值为 1*) - 运行一个试验给予的最低计算资源（budget），这里的计算资源通常使用mini-batches 或者 epochs。 该参数必须为正数。
+* **max_budget** (*整数, 可选项, 默认值为 3*) - 运行一个试验给予的最大计算资源（budget），这里的计算资源通常使用 mini-batches 或者 Epoch。 该参数必须大于“min_budget”。
+* **eta** (*整数, 可选项, 默认值为3*) - 在每次迭代中，执行完整的“连续减半”算法。 在这里，当一个使用相同计算资源的子集结束后，选择表现前 1/eta 好的参数，给予更高的优先级，进入下一轮比较（会获得更多计算资源）。 该参数必须大于等于 2。
+* **min_points_in_model**(*整数, 可选项, 默认值为None*): 建立核密度估计（KDE）要求的最小观察到的点。 默认值 None 表示 dim+1，当在该计算资源（budget）下试验过的参数已经大于等于`max{dim+1, min_points_in_model}` 时，BOHB 将会开始建立这个计算资源（budget）下对应的核密度估计（KDE）模型，然后用这个模型来指导参数的选取。 该参数必须为正数。 (dim 表示搜索空间中超参的数量)
+* **top_n_percent** (*整数, 可选, 默认值为 15*): 认为观察点为好点的百分数 (在 1 到 99 之间)。 区分表现好的点与坏的点是为了建立树形核密度估计模型。 例如，如果有 100 个观察到的 Trial，top_n_percent 为 15，则前 15% 的点将用于构建好点模型 "l(x)"。 其余 85% 的点将用于构建坏点模型 "g(x)"。
+* **num_samples** (*整数, 可选项, 默认值为64*): 用于优化 EI 值的采样个数（默认值为64）。 在这种情况下，将对 "num_samples" 点进行采样，并比较 l(x)/g(x) 的结果。 然后，如果 optimize_mode 是 `maximize`，就会返回其中 l(x)/g(x) 值最大的点作为下一个配置参数。 否则，使用值最小的点。
+* **random_fraction** (*浮点数, 可选项, 默认值为0.33*): 使用模型的先验（通常是均匀）来随机采样的比例。
+* **bandwidth_factor** (*浮点数, 可选, 默认值为 3.0 *): 为了鼓励多样性，把优化 EI 的点加宽，即把 KDE 中采样的点乘以这个因子，从而增加 KDE 中的带宽。 如果不熟悉 KDE，建议使用默认值。
+* **min_bandwidth**(*float, 可选, 默认值 = 0.001 *): 为了保持多样性, 即使所有好的样本对其中一个参数具有相同的值，使用最小带宽 (默认值: 1e-3) 而不是零。 如果不熟悉 KDE，建议使用默认值。
 
 *请注意，浮点类型当前仅支持十进制表示。 必须使用 0.333 而不是 1/3 ，0.001 而不是 1e-3。*
 
@@ -377,23 +377,23 @@ advisor:
 
 ### GP Tuner
 
-> Built-in Tuner Name: **GPTuner**
+> 名称：**GPTuner**
 
 注意，搜索空间接受的类型包括 `randint`, `uniform`, `quniform`,  `loguniform`, `qloguniform`，以及数值的 `choice`。 因为数值会被用来评估点之间的距离，所以只支持数值。
 
 **建议场景**
 
-作为序列的基于模型的全局优化（SMBO）算法，GP Tuner 使用了代理优化问题（找到采集函数的最大值）。虽然这仍然是个难题，但成本更低（从计算的角度来看），并且有通用的工具。 因此，GP Tuner 适合于函数的优化成本非常高时来使用。 GP 也可在计算资源非常有限时使用。 However, GP Tuner has a computational cost that grows at *O(N^3)* due to the requirement of inverting the Gram matrix, so it's not suitable when lots of trials are needed. [详细说明](./GPTuner.md)
+作为序列的基于模型的全局优化（SMBO）算法，GP Tuner 使用了代理优化问题（找到采集函数的最大值）。虽然这仍然是个难题，但成本更低（从计算的角度来看），并且有通用的工具。 因此，GP Tuner 适合于函数的优化成本非常高时来使用。 GP 也可在计算资源非常有限时使用。 然后，由于需要反转 Gram 矩阵，GP Tuner 的计算复杂度以 *O(N^3)* 的速度增长，因此不适合于需要大量 Trial 的情形。 [详细说明](./GPTuner.md)
 
 **classArgs 要求：**
 
-* **optimize_mode** (*'maximize' or 'minimize', optional, default = 'maximize'*) - If 'maximize', the tuner will try to maximize metrics. 如果为 'minimize'，表示 Tuner 的目标是将指标最小化。
-* **utility** (*'ei', 'ucb' or 'poi', optional, default = 'ei'*) - The utility function (acquisition function). 'ei', 'ucb' 和 'poi' 分别对应 '期望的改进（Expected Improvement）', '上限置信度边界（Upper Confidence Bound）' 和 '改进概率（Probability of Improvement）'。
-* **kappa** (*float, optional, default = 5*) - Used by the 'ucb' utility function. `kappa` 越大， Tuner 的探索性越强。
-* **xi** (*float, optional, default = 0*) - Used by the 'ei' and 'poi' utility functions. `xi` 越大， Tuner 的探索性越强。
-* **nu** (*float, optional, default = 2.5*) - Used to specify the Matern kernel. nu 越小，近似函数的平滑度越低。
-* **alpha** (*float, optional, default = 1e-6*) - Used to specify the Gaussian Process Regressor. 值越大，表示观察中的噪声水平越高。
-* **cold_start_num** (*int, optional, default = 10*) - Number of random explorations to perform before the Gaussian Process. 随机探索可帮助提高探索空间的广泛性。
+* **optimize_mode** (*'maximize' 或 'minimize', 可选项, 默认值为 'maximize'*) - 如果为 'maximize'，表示 Tuner 的目标是将指标最大化。 如果为 'minimize'，表示 Tuner 的目标是将指标最小化。
+* **utility** (*'ei', 'ucb' 或 'poi', 可选, 默认值为 'ei'*) - 工具函数的类型（采集函数）。 'ei', 'ucb' 和 'poi' 分别对应 '期望的改进（Expected Improvement）', '上限置信度边界（Upper Confidence Bound）' 和 '改进概率（Probability of Improvement）'。
+* **kappa** (*float, 可选, 默认值为 5*) - 用于 'ucb' 函数。 `kappa` 越大， Tuner 的探索性越强。
+* **xi** (*float, 可选, 默认为 0*) - 用于 'ei' 和 'poi' 工具函数。 `xi` 越大， Tuner 的探索性越强。
+* **nu** (*float, 可选, 默认为 2.5*) - 用于指定 Matern 核。 nu 越小，近似函数的平滑度越低。
+* **alpha** (*float, 可选, 默认值为 1e-6*) - 用于高斯过程回归器。 值越大，表示观察中的噪声水平越高。
+* **cold_start_num** (*int, 可选, 默认值为 10*) - 在高斯过程前执行随机探索的数量。 随机探索可帮助提高探索空间的广泛性。
 * **selection_num_warm_up** (*int, optional, default = 1e5*) - Number of random points to evaluate when getting the point which maximizes the acquisition function.
 * **selection_num_starting_points** (*int, optional, default = 250*) - Number of times to run L-BFGS-B from a random starting point after the warmup.
 
