@@ -27,7 +27,7 @@ advisor:
 
 注意，一旦使用了 Advisor，就不能在配置文件中添加 Tuner 和 Assessor。 使用 Hyperband 时，Trial 代码收到的超参（如键值对）中，会多一个用户定义的 `TRIAL_BUDGET`。 **使用 `TRIAL_BUDGET`，Trial 能够控制其运行的时间。</p>
 
-For `report_intermediate_result(metric)` and `report_final_result(metric)` in your trial code, **`metric` should be either a number or a dict which has a key `default` with a number as its value**. 这是需要进行最大化或者最小化优化的数值，如精度或者损失度。
+对于 Trial 代码中 `report_intermediate_result(metric)` 和 `report_final_result(metric)` 的**`指标`应该是数值，或者用一个 dict，并保证其中有键值为 default 的项目，其值也为数值型**。 这是需要进行最大化或者最小化优化的数值，如精度或者损失度。
 
 `R` 和 `eta` 是 Hyperband 中可以改动的参数。 `R` 表示可以分配给 Trial 的最大资源。 这里，资源可以代表 epoch 或 批处理数量。 `TRIAL_BUDGET` 应该被尝试代码用来控制运行的次数。 参考示例 `examples/trials/mnist-advisor/` ，了解详细信息。
 
@@ -51,7 +51,7 @@ For `report_intermediate_result(metric)` and `report_final_result(metric)` in yo
 ## 4. 未来的改进
 当前实现的 Hyperband 算法可以通过改进支持的提前终止算法来提高，因为最好的 `n/eta` 个配置并不一定都表现很好。 不好的配置应该更早的终止。
 
-In the current implementation, configurations are generated randomly which follows the design in the [paper][1]. 要进一步提升，配置生成过程可以利用更高级的算法。
+在当前实现中，遵循了[此论文][1]的设计，配置都是随机生成的。 要进一步提升，配置生成过程可以利用更高级的算法。
 
 [1]: https://arxiv.org/pdf/1603.06560.pdf
 
