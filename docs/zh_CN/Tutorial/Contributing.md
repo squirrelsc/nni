@@ -41,16 +41,16 @@
 * NNI 遵循 [PEP8](https://www.python.org/dev/peps/pep-0008/) 的 Python 代码命名约定。在提交拉取请求时，请尽量遵循此规范。 可通过`flake8`或`pylint`的提示工具来帮助遵循规范。
 * NNI 还遵循 [NumPy Docstring 风格](https://www.sphinx-doc.org/en/master/usage/extensions/example_numpy.html#example-numpy) 的 Python Docstring 命名方案。 Python API 使用了[sphinx.ext.napoleon](https://www.sphinx-doc.org/en/master/usage/extensions/napoleon.html) 来[生成文档](Contributing.md#documentation)。
 * 有关 docstrings，参考 [numpydoc docstring 指南](https://numpydoc.readthedocs.io/en/latest/format.html) 和 [pandas docstring 指南](https://python-sprints.github.io/pandas/guide/pandas_docstring.html)
-    * For function docstring, **description**, **Parameters**, and **Returns**/**Yields** are mandatory.
-    * For class docstring, **description**, **Attributes** are mandatory.
+    * 函数的 docstring, **description**, **Parameters**, 以及**Returns**/**Yields** 是必需的。
+    * 类的 docstring, **description**, **Attributes** 是必需的。
     * 描述 `dict` 的 docstring 在超参格式描述中多处用到，参考 [RiboKit : 文档标准
  - 写作标准的内部准则](https://ribokit.github.io/docs/text/)
 
 ## 文档
 文档使用了 [sphinx](http://sphinx-doc.org/) 来生成，支持 [Markdown](https://guides.github.com/features/mastering-markdown/) 和 [reStructuredText](http://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html) 格式。 所有文档都在 [docs/zh_CN](docs) 目录下。
 
-* Before submitting the documentation change, please __build homepage locally__: `cd docs/en_US && make html`, then you can see all the built documentation webpage under the folder `docs/en_US/_build/html`. It's also highly recommended taking care of __every WARNING__ during the build, which is very likely the signal of a __deadlink__ and other annoying issues.
+* 在提交文档改动前，请先__在本地生成文档__：`cd docs/zh_CN && make html`，然后，可以在 `docs/zh_CN/_build/html` 目录下找到所有生成的网页。 请认真分析生成日志中的__每个 WARNING__，这非常有可能是或__空连接__或其它问题。
 
-* For links, please consider using __relative paths__ first. 但如果文档是 Markdown 格式的，并且：
+* 需要链接时，尽量使用__相对路径__。 但如果文档是 Markdown 格式的，并且：
     * 图片需要通过嵌入的 HTML 语法来格式化，则需要使用绝对链接，如 `https://user-images.githubusercontent.com/44491713/51381727-e3d0f780-1b4f-11e9-96ab-d26b9198ba65.png`。可以通过将图片拖拽到 [Github Issue](https://github.com/Microsoft/nni/issues/new) 框中来生成这样的链接。
     * 如果不能被 sphinx 重新格式化，如源代码等，则需要使用绝对链接。 如果源码连接到本代码库，使用 `https://github.com/Microsoft/nni/tree/master/` 作为根目录 (例如：[mnist.py](https://github.com/Microsoft/nni/blob/master/examples/trials/mnist-tfv1/mnist.py))。
