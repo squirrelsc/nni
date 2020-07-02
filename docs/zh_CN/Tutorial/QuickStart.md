@@ -132,7 +132,7 @@ NNI 用来帮助超参调优。它的流程如下：
 
 *示例：[mnist.py](https://github.com/Microsoft/nni/tree/master/examples/trials/mnist-tfv1/mnist.py)*
 
-**Step 3**: Define a `config` file in YAML which declares the `path` to the search space and trial files. 它还提供其他信息，例如调整算法，最大 Trial 运行次数和最大持续时间的参数。
+**第三步**：定义 YAML 格式的`配置`文件，其中声明了搜索空间和 Trial 文件的`路径`。 它还提供其他信息，例如调整算法，最大 Trial 运行次数和最大持续时间的参数。
 
 ```yaml
 authorName: default
@@ -163,7 +163,7 @@ trial:
 
 #### Linux 和 macOS
 
-Run the **config.yml** file from your command line to start an MNIST experiment.
+从命令行使用 **config.yml** 文件启动 MNIST Experiment 。
 
 ```bash
 nnictl create --config nni/examples/trials/mnist-tfv1/config.yml
@@ -171,7 +171,7 @@ nnictl create --config nni/examples/trials/mnist-tfv1/config.yml
 
 #### Windows
 
-Run the **config_windows.yml** file from your command line to start an MNIST experiment.
+从命令行使用 **config_windows.yml** 文件启动 MNIST Experiment 。
 
 ```bash
 nnictl create --config nni\examples\trials\mnist-tfv1\config_windows.yml
@@ -229,7 +229,7 @@ Web 地址为：[IP 地址]:8080
 
 点击 "Overview" 标签。
 
-Experiment 相关信息会显示在界面上，配置和搜索空间等。 NNI also supports downloading this information and the parameters through the **Download** button. 可以在 Experiment 运行时随时下载结果，也可以等到执行结束。
+Experiment 相关信息会显示在界面上，配置和搜索空间等。 可通过 **Download** 按钮来下载信息和参数。 可以在 Experiment 运行时随时下载结果，也可以等到执行结束。
 
 ![](../../img/QuickStart1.png)
 
