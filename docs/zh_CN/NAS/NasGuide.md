@@ -1,15 +1,15 @@
 # One-Shot NAS algorithms
 
-除了 [经典 NAS 算法](./ClassicNas.md)，还可以使用更先进的 One-Shot NAS 算法来从搜索空间中找到更好的模型。 There are lots of related works about one-shot NAS algorithms, such as [SMASH][8], [ENAS][2], [DARTS][1], [FBNet][3], [ProxylessNAS][4], [SPOS][5], [Single-Path NAS][6],  [Understanding One-shot][7] and [GDAS][9]. One-Shot NAS 算法通常会构建一个超网络，其中包含的子网作为此搜索空间的候选项。每一步，会训练一个或多个子网的组合。
+除了 [经典 NAS 算法](./ClassicNas.md)，还可以使用更先进的 One-Shot NAS 算法来从搜索空间中找到更好的模型。 One-Shot NAS 算法已有了大量的相关工作，如 [SMASH][8], [ENAS][2], [DARTS][1], [FBNet][3], [ProxylessNAS][4], [SPOS][5], [Single-Path NAS][6],  [Understanding One-shot][7] 以及 [GDAS][9]。 One-Shot NAS 算法通常会构建一个超网络，其中包含的子网作为此搜索空间的候选项。每一步，会训练一个或多个子网的组合。
 
-当前，NNI 支持数种 One-Shot 方法。 For example, `DartsTrainer`, which uses SGD to train architecture weights and model weights iteratively, and `ENASTrainer`, which [uses a controller to train the model][2]. 新的、更高效的 NAS Trainer 在研究界不断的涌现出来，NNI 会在将来的版本中实现其中的一部分。
+当前，NNI 支持数种 One-Shot 方法。 例如，`DartsTrainer` 使用 SGD 来交替训练架构和模型权重，`ENASTrainer` [使用 Controller 来训练模型][2]。 新的、更高效的 NAS Trainer 在研究界不断的涌现出来，NNI 会在将来的版本中实现其中的一部分。
 
 ## 使用 One-Shot NAS 算法进行搜索
 
 每个 One-Shot NAS 算法都实现了 Trainer，可在每种算法说明中找到详细信息。 这是如何使用 `EnasTrainer` 的简单示例。
 
 ```python
-# this is exactly same as traditional model training
+# 与经典模型训练完全相同
 model = Net()
 dataset_train = CIFAR10(root="./data", train=True, download=True, transform=train_transform)
 dataset_valid = CIFAR10(root="./data", train=False, download=True, transform=valid_transform)
