@@ -2,18 +2,18 @@
 
 NNI 提供了先进的评估算法，使用上也很简单。 下面是内置 Assessor 的介绍。
 
-Note: Click the **Assessor's name** to get each Assessor's installation requirements, suggested usage scenario, and a config example. 在每个 Assessor 建议场景最后，还有算法的详细说明。
+注意：点击 **Assessor 的名称**可了解每个 Assessor 的安装需求，建议的场景以及示例。 在每个 Assessor 建议场景最后，还有算法的详细说明。
 
 当前支持以下 Assessor：
 
-| Assessor                          | 算法简介                                                                                                                                                                                                                                                                                                                                                |
-| --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [__Medianstop__](#MedianStop)     | Medianstop 是一个简单的提前终止算法。 It stops a pending trial X at step S if the trial’s best objective value by step S is strictly worse than the median value of the running averages of all completed trials’ objectives reported up to step S. [Reference Paper](https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/46180.pdf) |
-| [__Curvefitting__](#Curvefitting) | Curve Fitting Assessor 是一个 LPA (learning, predicting, assessing，即学习、预测、评估) 的算法。 如果预测的 Trial X 在 step S 比性能最好的 Trial 要差，就会提前终止它。 此算法中采用了 12 种曲线来拟合精度曲线。 [参考论文](http://aad.informatik.uni-freiburg.de/papers/15-IJCAI-Extrapolation_of_Learning_Curves.pdf)                                                                                           |
+| Assessor                          | 算法简介                                                                                                                                                                                                                                                      |
+| --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [__Medianstop__](#MedianStop)     | Medianstop 是一个简单的提前终止算法。 如果 Trial X 在步骤 S 的最好目标值低于所有已完成 Trial 前 S 个步骤目标平均值的中位数，这个 Trial 就会被提前停止。 [参考论文](https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/46180.pdf)                                                        |
+| [__Curvefitting__](#Curvefitting) | Curve Fitting Assessor 是一个 LPA (learning, predicting, assessing，即学习、预测、评估) 的算法。 如果预测的 Trial X 在 step S 比性能最好的 Trial 要差，就会提前终止它。 此算法中采用了 12 种曲线来拟合精度曲线。 [参考论文](http://aad.informatik.uni-freiburg.de/papers/15-IJCAI-Extrapolation_of_Learning_Curves.pdf) |
 
 ## 用法
 
-Usage of builtin assessors provided by the NNI SDK requires one to declare the  **builtinAssessorName** and **classArgs** in the `config.yml` file. 这一节会介绍推荐的场景、参数等详细用法以及示例。
+要使用 NNI 内置的 Assessor，需要在 `config.yml` 文件中添加 **builtinAssessorName** 和 **classArgs**。 这一节会介绍推荐的场景、参数等详细用法以及示例。
 
 注意：参考示例中的格式来创建新的 `config.yml` 文件。
 
@@ -21,7 +21,7 @@ Usage of builtin assessors provided by the NNI SDK requires one to declare the  
 
 ### Median Stop Assessor
 
-> Builtin Assessor Name: **Medianstop**
+> 名称：**Medianstop**
 
 **建议场景**
 
@@ -29,7 +29,7 @@ Usage of builtin assessors provided by the NNI SDK requires one to declare the  
 
 **classArgs 要求：**
 
-* **optimize_mode** (*maximize or minimize, optional, default = maximize*) - If 'maximize', assessor will **stop** the trial with smaller expectation. If 'minimize', assessor will **stop** the trial with larger expectation.
+* **optimize_mode** (*maximize 或 minimize, 可选, 默认值为 maximize*) - 如果为 'maximize', Assessor 会在结果小于期望值时**终止** Trial。 如果为 'minimize'，Assessor 会在结果大于期望值时**终止** Trial。
 * **start_step** (*int, optional, default = 0*) - A trial is determined to be stopped or not only after receiving start_step number of reported intermediate results.
 
 **使用示例：**
