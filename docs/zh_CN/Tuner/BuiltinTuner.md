@@ -394,8 +394,8 @@ advisor:
 * **nu** (*float, 可选, 默认为 2.5*) - 用于指定 Matern 核。 nu 越小，近似函数的平滑度越低。
 * **alpha** (*float, 可选, 默认值为 1e-6*) - 用于高斯过程回归器。 值越大，表示观察中的噪声水平越高。
 * **cold_start_num** (*int, 可选, 默认值为 10*) - 在高斯过程前执行随机探索的数量。 随机探索可帮助提高探索空间的广泛性。
-* **selection_num_warm_up** (*int, optional, default = 1e5*) - Number of random points to evaluate when getting the point which maximizes the acquisition function.
-* **selection_num_starting_points** (*int, optional, default = 250*) - Number of times to run L-BFGS-B from a random starting point after the warmup.
+* **selection_num_warm_up** (*int, 可选, 默认为 1e5*) - 用于获得最大采集函数而评估的随机点数量。
+* **selection_num_starting_points** (*int, 可选, 默认为 250*) - 预热后，从随机七十点运行 L-BFGS-B 的次数。
 
 **配置示例：**
 
@@ -419,7 +419,7 @@ tuner:
 
 ### PPO Tuner
 
-> Built-in Tuner Name: **PPOTuner**
+> 名称：**PPOTuner**
 
 注意，搜索空间仅接受 `layer_choice` 和 `input_choice` 类型。 `input_choice`, `n_chosen` 只能是 0, 1, 或 [0, 1]。 注意，NAS 的搜索空间文件通常通过 [`nnictl ss_gen`](../Tutorial/Nnictl.md) 命令自动生成。
 
@@ -429,17 +429,17 @@ PPO Tuner 是基于 PPO 算法的强化学习 Tuner。 PPOTuner 可用于使用 
 
 **classArgs 要求：**
 
-* **optimize_mode** (*'maximize' or 'minimize'*) - If 'maximize', the tuner will try to maximize metrics. 如果为 'minimize'，表示 Tuner 的目标是将指标最小化。
-* **trials_per_update** (*int, optional, default = 20*) - The number of trials to be used for one update. 此数字必须可被 minibatch_size 整除。 推荐将 `trials_per_update` 设为 `trialConcurrency` 的倍数，以提高 Trial 的并发效率。
-* **epochs_per_update** (*int, optional, default = 4*) - The number of epochs for one update.
-* **minibatch_size** (*int, optional, default = 4*) - Mini-batch size (i.e., number of trials for a mini-batch) for the update. 注意，trials_per_update 必须可被 minibatch_size 整除。
-* **ent_coef** (*float, optional, default = 0.0*) - Policy entropy coefficient in the optimization objective.
-* **lr** (*float, optional, default = 3e-4*) - Learning rate of the model (lstm network); constant.
-* **vf_coef** (*float, optional, default = 0.5*) - Value function loss coefficient in the optimization objective.
-* **max_grad_norm** (*float, optional, default = 0.5*) - Gradient norm clipping coefficient.
-* **gamma** (*float, optional, default = 0.99*) - Discounting factor.
-* **lam** (*float, optional, default = 0.95*) - Advantage estimation discounting factor (lambda in the paper).
-* **cliprange** (*float, optional, default = 0.2*) - Cliprange in the PPO algorithm, constant.
+* **optimize_mode** (*'maximize' 或 'minimize'*) - 如果为 'maximize'，表示 Tuner 的目标是将指标最大化。 如果为 'minimize'，表示 Tuner 的目标是将指标最小化。
+* **trials_per_update** (*int, 可选, 默认为 20*) - 每次更新的 Trial 数量。 此数字必须可被 minibatch_size 整除。 推荐将 `trials_per_update` 设为 `trialConcurrency` 的倍数，以提高 Trial 的并发效率。
+* **epochs_per_update** (*int, 可选, 默认为 4*) - 每次更新的 Epoch 数量。
+* **minibatch_size** (*int, 可选, 默认为 4*) - mini-batch 大小 (即每个 mini-batch 的 Trial 数量)。 注意，trials_per_update 必须可被 minibatch_size 整除。
+* **ent_coef** (*float, 可选, 默认为 0.0*) - 优化目标中的 Policy entropy coefficient。
+* **lr** (*float, 可选, 默认为 3e-4*) - 模型的学习率（LSTM 网络），为常数。
+* **vf_coef** (*float, 可选, 默认为 0.5*) - Value function loss coefficient in the optimization objective.
+* **max_grad_norm** (*float, 可选, 默认为 0.5*) - Gradient norm clipping coefficient.
+* **gamma** (*float, 可选, 默认为 0.99*) - Discounting factor.
+* **lam** (*float, 可选, 默认为 0.95*) - Advantage estimation discounting factor (论文中的 lambda).
+* **cliprange** (*float, 可选, 默认为 0.2*) - PPO 算法的 cliprange, 为常数。
 
 **配置示例：**
 
@@ -455,7 +455,7 @@ tuner:
 
 ### PBT Tuner
 
-> Built-in Tuner Name: **PBTTuner**
+> 名称：**PBTTuner**
 
 **建议场景**
 
@@ -463,11 +463,11 @@ Population Based Training (PBT，基于种群的训练)，将并扩展并行搜�
 
 **classArgs 要求：**
 
-* **optimize_mode** (*'maximize' or 'minimize'*) - If 'maximize', the tuner will target to maximize metrics. 如果为 'minimize'，表示 Tuner 的目标是将指标最小化。
-* **all_checkpoint_dir** (*str, optional, default = None*) - Directory for trials to load and save checkpoint, if not specified, the directory would be "~/nni/checkpoint/<exp-id>". 注意，如果 Experiment 不是本机模式，用户需要提供能被所有 Trial 所访问的共享存储。
-* **population_size** (*int, optional, default = 10*) - Number of trials in a population. 每个步骤有此数量的 Trial。 在 NNI 的实现中，一步表示每个 Trial 运行一定次数 Epoch，此 Epoch 的数量由用户来指定。
-* **factors** (*tuple, optional, default = (1.2, 0.8)*) - Factors for perturbation of hyperparameters.
-* **fraction** (*float, optional, default = 0.2*) - Fraction for selecting bottom and top trials.
+* **optimize_mode** (*'maximize' 或 'minimize'*) - 如果为 'maximize'，表示 Tuner 的目标是将指标最大化。 如果为 'minimize'，表示 Tuner 的目标是将指标最小化。
+* **all_checkpoint_dir** (*str, 可选, 默认为 None*) - 所有 Trial 读写检查点的目录，如果未指定，默认为 "~/nni/checkpoint/<exp-id>". 注意，如果 Experiment 不是本机模式，用户需要提供能被所有 Trial 所访问的共享存储。
+* **population_size** (*int, 可选, 默认为 10*) - 种群的 Trial 数量。 每个步骤有此数量的 Trial。 在 NNI 的实现中，一步表示每个 Trial 运行一定次数 Epoch，此 Epoch 的数量由用户来指定。
+* **factors** (*tuple, 可选, 默认为 (1.2, 0.8)*) - 超参变动量的因子。
+* **fraction** (*float, 可选, 默认为 0.2*) - 选择的最低和最高 Trial 的比例。
 
 **示例**
 
