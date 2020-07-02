@@ -485,25 +485,25 @@ NNI 会校验 remote, pai 和 Kubernetes 模式下 NNIManager 与 trialKeeper �
 
     * __image__: __ps__ 使用的映像。
 
-* __worker__: An optional configuration for kubeflow's tensorflow-operator.
+* __worker__ 是 Kubeflow 的 tensorflow-operator 的可选配置。
 
-    * __replicas__: The replica number of __worker__ role.
+    * __replicas__: __worker__ 角色的副本数量。
 
-    * __command__: The run script in __worker__'s container.
+    * __command__: __worker__ 容器中运行的脚本。
 
-    * __gpuNum__: The gpu number to be used in __worker__ container.
+    * __gpuNum__: __worker__ 容器中使用的 GPU 数量。
 
-    * __cpuNum__: The cpu number to be used in __worker__ container.
+    * __cpuNum__: __worker__ 容器中使用的 CPU 数量。
 
-    * __memoryMB__: The memory size of the container.
+    * __memoryMB__: 容器中使用的内存数量。
 
-    * __image__: The image to be used in __worker__.
+    * __image__: __worker__ 使用的映像。
 
 ### localConfig
 
 本机模式下可选。 键值对。
 
-Only applicable if __trainingServicePlatform__ is set to `local`, otherwise there should not be __localConfig__ section in configuration file.
+仅在 __trainingServicePlatform__ 设为 `local` 时有效，否则，配置文件中不应该有 __localConfig__ 部分。
 
 #### gpuIndices
 
@@ -521,7 +521,7 @@ Only applicable if __trainingServicePlatform__ is set to `local`, otherwise ther
 
 可选。 布尔。 默认值：false。
 
-用于指定 GPU 上存在其他进程时是否使用此 GPU。 默认情况下，NNI 仅在 GPU 中没有其他活动进程时才使用 GPU。 If __useActiveGpu__ is set to true, NNI will use the GPU regardless of another processes. 此字段不适用于 Windows 版的 NNI。
+用于指定 GPU 上存在其他进程时是否使用此 GPU。 默认情况下，NNI 仅在 GPU 中没有其他活动进程时才使用 GPU。 如果 __useActiveGpu__ 设置为 true，则 NNI 无论某 GPU 是否有其它进程，都将使用它。 此字段不适用于 Windows 版的 NNI。
 
 ### machineList
 
@@ -555,7 +555,7 @@ Only applicable if __trainingServicePlatform__ is set to `local`, otherwise ther
 
 如果使用 SSH 密钥进行身份验证，则为必需。 私钥文件的路径。
 
-If users use ssh key to login remote machine, __sshKeyPath__ should be a valid path to a ssh key file.
+如果用户使用 SSH 密钥登录远程计算机，__sshKeyPath__ 应是有效的 SSH 密钥文件路径。
 
 *注意：如果同时设置了 passwd 和 sshKeyPath，NNI 会首先使用 passwd。*
 
@@ -581,7 +581,7 @@ If users use ssh key to login remote machine, __sshKeyPath__ should be a valid p
 
 可选。 布尔。 默认值：false。
 
-用于指定 GPU 上存在其他进程时是否使用此 GPU。 默认情况下，NNI 仅在 GPU 中没有其他活动进程时才使用 GPU。 If __useActiveGpu__ is set to true, NNI will use the GPU regardless of another processes. 此字段不适用于 Windows 版的 NNI。
+用于指定 GPU 上存在其他进程时是否使用此 GPU。 默认情况下，NNI 仅在 GPU 中没有其他活动进程时才使用 GPU。 如果 __useActiveGpu__ 设置为 true，则 NNI 无论某 GPU 是否有其它进程，都将使用它。 此字段不适用于 Windows 版的 NNI。
 
 ### kubeflowConfig
 
@@ -601,19 +601,19 @@ If users use ssh key to login remote machine, __sshKeyPath__ should be a valid p
 
 如果使用 nfs，则必需。 键值对。
 
-* __server__ is the host of nfs server.
+* __server__ 是 NFS 服务器的地址。
 
-* __path__ is the mounted path of nfs.
+* __path__ 是 NFS 挂载的路径。
 
 #### keyVault
 
 如果使用 Azure 存储，则必需。 键值对。
 
-Set __keyVault__ to storage the private key of your azure storage account. 参考：https://docs.microsoft.com/en-us/azure/key-vault/key-vault-manage-with-cli2 。
+将 __keyVault__ 设置为 Azure 存储帐户的私钥。 参考：https://docs.microsoft.com/en-us/azure/key-vault/key-vault-manage-with-cli2 。
 
-* __vaultName__ is the value of `--vault-name` used in az command.
+* __vaultName__ 是 az 命令中 `--vault-name` 的值。
 
-* __name__ is the value of `--name` used in az command.
+* __name__ 是 az 命令中 `--name` 的值。
 
 #### azureStorage
 
@@ -621,9 +621,9 @@ Set __keyVault__ to storage the private key of your azure storage account. 参�
 
 设置 Azure 存储帐户以存储代码文件。
 
-* __accountName__ is the name of azure storage account.
+* __accountName__ 是 Azure 存储账户的名称。
 
-* __azureShare__ is the share of the azure file storage.
+* __azureShare__ 是 Azure 文件存储的共享参数。
 
 #### uploadRetryCount
 
@@ -675,15 +675,15 @@ OpenPAI 的 IP 地址。
   trialConcurrency: 3
   maxExecDuration: 1h
   maxTrialNum: 10
-  #choice: local, remote, pai, kubeflow
+  #可选项: local, remote, pai, kubeflow
   trainingServicePlatform: local
-  #choice: true, false
+  #可选项: true, false
   useAnnotation: true
   tuner:
-    #choice: TPE, Random, Anneal, Evolution
+    #可选项: TPE, Random, Anneal, Evolution
     builtinTunerName: TPE
     classArgs:
-      #choice: maximize, minimize
+      #可选项: maximize, minimize
       optimize_mode: maximize
   trial:
     command: python3 mnist.py
@@ -699,22 +699,22 @@ OpenPAI 的 IP 地址。
   trialConcurrency: 3
   maxExecDuration: 1h
   maxTrialNum: 10
-  #choice: local, remote, pai, kubeflow
+  #可选项: local, remote, pai, kubeflow
   trainingServicePlatform: local
   searchSpacePath: /nni/search_space.json
-  #choice: true, false
+  #可选项: true, false
   useAnnotation: false
   tuner:
-    #choice: TPE, Random, Anneal, Evolution
+    #可选项: TPE, Random, Anneal, Evolution
     builtinTunerName: TPE
     classArgs:
-      #choice: maximize, minimize
+      #可选项: maximize, minimize
       optimize_mode: maximize
   assessor:
-    #choice: Medianstop
+    #可选项: Medianstop
     builtinAssessorName: Medianstop
     classArgs:
-      #choice: maximize, minimize
+      #可选项: maximize, minimize
       optimize_mode: maximize
   trial:
     command: python3 mnist.py
@@ -730,24 +730,24 @@ OpenPAI 的 IP 地址。
   trialConcurrency: 3
   maxExecDuration: 1h
   maxTrialNum: 10
-  #choice: local, remote, pai, kubeflow
+  #可选项: local, remote, pai, kubeflow
   trainingServicePlatform: local
   searchSpacePath: /nni/search_space.json
-  #choice: true, false
+  #可选项: true, false
   useAnnotation: false
   tuner:
     codeDir: /nni/tuner
     classFileName: mytuner.py
     className: MyTuner
     classArgs:
-      #choice: maximize, minimize
+      #可选项: maximize, minimize
       optimize_mode: maximize
   assessor:
     codeDir: /nni/assessor
     classFileName: myassessor.py
     className: MyAssessor
     classArgs:
-      #choice: maximize, minimize
+      #可选项: maximize, minimize
       optimize_mode: maximize
   trial:
     command: python3 mnist.py
@@ -765,22 +765,22 @@ OpenPAI 的 IP 地址。
   trialConcurrency: 3
   maxExecDuration: 1h
   maxTrialNum: 10
-  #choice: local, remote, pai, kubeflow
+  #可选项: local, remote, pai, kubeflow
   trainingServicePlatform: remote
   searchSpacePath: /nni/search_space.json
-  #choice: true, false
+  #可选项: true, false
   useAnnotation: false
   tuner:
-    #choice: TPE, Random, Anneal, Evolution
+    #可选项: TPE, Random, Anneal, Evolution
     builtinTunerName: TPE
     classArgs:
-      #choice: maximize, minimize
+      #可选项: maximize, minimize
       optimize_mode: maximize
   trial:
     command: python3 mnist.py
     codeDir: /nni/mnist
     gpuNum: 0
-  #machineList can be empty if the platform is local
+  # local 模式下 machineList 可为空
   machineList:
     - ip: 10.10.10.10
       port: 22
@@ -805,17 +805,17 @@ OpenPAI 的 IP 地址。
   trialConcurrency: 1
   maxExecDuration:500h
   maxTrialNum: 1
-  #choice: local, remote, pai, kubeflow
+  #可选项: local, remote, pai, kubeflow
   trainingServicePlatform: pai
   searchSpacePath: search_space.json
-  #choice: true, false
+  #可选项: true, false
   useAnnotation: false
   tuner:
-    #choice: TPE, Random, Anneal, Evolution, BatchTuner
+    #可选项: TPE, Random, Anneal, Evolution, BatchTuner
     #SMAC (SMAC should be installed through nnictl)
     builtinTunerName: TPE
     classArgs:
-      #choice: maximize, minimize
+      #可选项: maximize, minimize
       optimize_mode: maximize
   trial:
     command: python3 main.py
@@ -823,14 +823,14 @@ OpenPAI 的 IP 地址。
     gpuNum: 4
     cpuNum: 2
     memoryMB: 10000
-    #The docker image to run NNI job on pai
+    # 在 OpenPAI 上运行 NNI 的 Docker 映像
     image: msranni/nni:latest
   paiConfig:
-    #The username to login pai
+    # 登录 OpenPAI 的用户名
     userName: test
-    #The password to login pai
+    # 登录 OpenPAI 的密码
     passWord: test
-    #The host of restful server of pai
+    # OpenPAI 的 RestFUL 服务器地址
     host: 10.10.10.10
   ```
 
@@ -844,16 +844,16 @@ OpenPAI 的 IP 地址。
   trialConcurrency: 1
   maxExecDuration: 1h
   maxTrialNum: 1
-  #choice: local, remote, pai, kubeflow
+  #可选项: local, remote, pai, kubeflow
   trainingServicePlatform: kubeflow
   searchSpacePath: search_space.json
-  #choice: true, false
+  #可选项: true, false
   useAnnotation: false
   tuner:
-    #choice: TPE, Random, Anneal, Evolution
+    #可选项: TPE, Random, Anneal, Evolution
     builtinTunerName: TPE
     classArgs:
-      #choice: maximize, minimize
+      #可选项: maximize, minimize
       optimize_mode: maximize
   trial:
     codeDir: .
@@ -879,17 +879,17 @@ OpenPAI 的 IP 地址。
   trialConcurrency: 1
   maxExecDuration: 1h
   maxTrialNum: 1
-  #choice: local, remote, pai, kubeflow
+  #可选项: local, remote, pai, kubeflow
   trainingServicePlatform: kubeflow
   searchSpacePath: search_space.json
-  #choice: true, false
+  #可选项: true, false
   useAnnotation: false
   #nniManagerIp: 10.10.10.10
   tuner:
-    #choice: TPE, Random, Anneal, Evolution
+    #可选项: TPE, Random, Anneal, Evolution
     builtinTunerName: TPE
     classArgs:
-      #choice: maximize, minimize
+      #可选项: maximize, minimize
       optimize_mode: maximize
   assessor:
     builtinAssessorName: Medianstop
