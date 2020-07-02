@@ -2,7 +2,7 @@
 
 ## 介绍
 
-__nnictl__ is a command line tool, which can be used to control experiments, such as start/stop/resume an experiment, start/stop NNIBoard, etc.
+__nnictl__ 是一个命令行工具，用来控制 NNI 实验，如启动、停止、继续实验，启动、停止 NNIBoard 等等。
 
 ## 命令
 
@@ -801,7 +801,7 @@ nnictl 支持的命令：
     nnictl package uninstall <包名称>
     ```
 
-  * Example Uninstall SMAC package
+  * 示例 卸载 SMAC 包
 
     ```bash
     nnictl package uninstall SMAC
