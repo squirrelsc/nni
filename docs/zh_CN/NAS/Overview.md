@@ -6,7 +6,7 @@
 
 ## 概述
 
-自动化的神经网络架构（NAS）搜索在寻找更好的模型方面发挥着越来越重要的作用。 最近的研究工作证明了自动化 NAS 的可行性，并发现了一些超越手动设计和调整的模型。 Some representative works are [NASNet][2], [ENAS][1], [DARTS][3], [Network Morphism][4], and [Evolution][5]. 此外，新的创新不断涌现。
+自动化的神经网络架构（NAS）搜索在寻找更好的模型方面发挥着越来越重要的作用。 最近的研究工作证明了自动化 NAS 的可行性，并发现了一些超越手动设计和调整的模型。 代表算法有 [NASNet][2]，[ENAS][1]，[DARTS][3], [Network Morphism][4]，和 [Evolution][5]。 此外，新的创新不断涌现。
 
 但是，要实现NAS算法需要花费大量的精力，并且很难在新算法中重用现有算法的代码。 为了促进 NAS 创新（例如，设计、实现新的 NAS 模型，并列比较不同的 NAS 模型），易于使用且灵活的编程接口非常重要。
 
@@ -41,7 +41,7 @@ NNI 目前支持下面列出的 One-Shot NAS 算法，并且正在添加更多�
 | [ProxylessNAS](https://nni.readthedocs.io/zh/latest/NAS/Proxylessnas.html) | [ProxylessNAS: Direct Neural Architecture Search on Target Task and Hardware](https://arxiv.org/abs/1812.00332). 它删除了代理，直接从大规模目标任务和目标硬件平台进行学习。                                  |
 | [TextNAS](https://nni.readthedocs.io/zh/latest/NAS/TextNAS.html)           | [TextNAS: A Neural Architecture Search Space tailored for Text Representation](https://arxiv.org/pdf/1912.10729.pdf)。 这是专门用于文本表示的神经网络架构搜索算法。                                    |
 
-One-shot 算法**不需要 nnictl，可单独运行**。 NNI supports both PyTorch and Tensorflow 2.X.
+One-shot 算法**不需要 nnictl，可单独运行**。 NNI 支持 PyTorch 和 TensorFlow 2.X。
 
 这是运行示例的一些常见依赖项。 PyTorch 需要高于 1.2 才能使用 `BoolTensor`.
 
