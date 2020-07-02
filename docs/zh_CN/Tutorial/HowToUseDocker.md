@@ -62,7 +62,7 @@ NNI 的官方镜像 msranni/nni 暂不支持 SSH 服务，应构建自己的带�
 
 ### 第二步：在远程机器上启动 Dokcer 容器
 
-SSH 服务需要端口，要把 Docker 的 SSH 服务端口暴露给 NNI 作为连接端口。 For example, if you set your container's SSH port as **`A`**, you should map the container's port **`A`** to your remote host machine's other port **`B`**, NNI will connect port **`B`** as an SSH port, and your host machine will map the connection from port **`B`** to port **`A`** then NNI could connect to your Docker container.
+SSH 服务需要端口，要把 Docker 的 SSH 服务端口暴露给 NNI 作为连接端口。 例如，如果设置容器的端口 **`A`** 作为 SSH 端口，应把端口 **`A`** 映射到主机的端口**`B`**，NNI 会连接端口**`B`** 作为 SSH 服务端口，主机会把连接到端口 **`B`** 的连接映射到端口 **`A`**，NNI 就可以连接到容器中了。
 
 例如，通过如下命令来启动 Docker 容器：
 ```
