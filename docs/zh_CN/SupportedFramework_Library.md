@@ -27,7 +27,7 @@
 如果能[贡献更多示例](Tutorial/Contributing.md)，会对其他 NNI 用户有很大的帮助。
 
 ## 支持的库
-NNI also supports all libraries written in python.Here are some common libraries, including some algorithms based on GBDT: XGBoost, CatBoost and lightGBM.
+NNI 支持所有基于 Python 的库。Here are some common libraries, including some algorithms based on GBDT: XGBoost, CatBoost and lightGBM.
 * <b>[Scikit-learn]</b> https://scikit-learn.org/stable/
     <ul>
     <li><a href="TrialExample/SklearnExamples.md">Scikit-learn</a><br/></li>
