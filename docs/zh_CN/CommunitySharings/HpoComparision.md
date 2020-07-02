@@ -125,11 +125,11 @@ Entries:    1000000
 
 #### 存储性能
 
-**Latency**: each IO request will take some time to complete, this is called the average latency. 有几个因素会影响此时间，包括网络连接质量和硬盘IO性能。
+**延迟**：每个 IO 请求都需要一些时间才能完成，这称为平均延迟。 有几个因素会影响此时间，包括网络连接质量和硬盘IO性能。
 
-**IOPS**: **IO operations per second**, which means the amount of _read or write operations_ that could be done in one seconds time.
+**IOPS**：**每秒的 IO 操作数量**，这意味着可以在一秒钟内完成的_读取或写入操作次数_。
 
-**IO size**: **the size of each IO request**. 根据操作系统和需要磁盘访问的应用程序、服务，它将同时发出读取或写入一定数量数据的请求。
+**IO 大小**：**每个 IO 请求的大小**。 根据操作系统和需要磁盘访问的应用程序、服务，它将同时发出读取或写入一定数量数据的请求。
 
 **吞吐量（以 MB/s 为单位）= 平均 IO 大小 x IOPS **
 
