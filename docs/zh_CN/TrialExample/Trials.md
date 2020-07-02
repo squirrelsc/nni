@@ -1,6 +1,6 @@
 # 实现 NNI 的 Trial（尝试）代码
 
-A **Trial** in NNI is an individual attempt at applying a configuration (e.g., a set of hyper-parameters) to a model.
+**Trial（尝试）**是将一组参数组合（例如，超参）在模型上独立的一次尝试。
 
 定义 NNI 的 Trial，需要首先定义参数组，并更新模型代码。 NNI 有两种方法来实现 Trial：[NNI API](#nni-api) 以及 [NNI Python annotation](#nni-annotation)。 参考[这里的](#more-examples)更多 Trial 示例。
 
@@ -56,7 +56,7 @@ nni.report_final_result(metrics)
 
 ### 第三步：启用 NNI API
 
-To enable NNI API mode, you need to set useAnnotation to *false* and provide the path of the SearchSpace file was defined in step 1:
+要启用 NNI 的 API 模式，需要将 useAnnotation 设置为 *false*，并提供搜索空间文件的路径，即第一步中定义的文件：
 
 ```yaml
 useAnnotation: false
@@ -115,7 +115,7 @@ with tf.Session() as sess:
 +   """@nni.report_final_result(test_acc)"""
 ```
 
-**NOTE**:
+**注意**:
 - `@nni.variable` 会对它的下面一行进行修改，左边被赋值变量必须与 `@nni.variable` 的关键字 `name` 相同。
 - `@nni.report_intermediate_result`/`@nni.report_final_result` 会将数据发送给 Assessor、Tuner。
 
@@ -124,7 +124,7 @@ Annotation 的语法和用法等，参考 [Annotation](../Tutorial/AnnotationSpe
 
 ### 第二步：启用 Annotation
 
-In the YAML configure file, you need to set *useAnnotation* to true to enable NNI annotation:
+在 YAML 配置文件中设置 *useAnnotation* 为 true 来启用 Annotation：
 ```
 useAnnotation: true
 ```
