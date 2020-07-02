@@ -139,7 +139,7 @@ pruner.compress()
 > 
 > 从第 i 个卷积层修剪 m 个滤波器的过程如下：
 > 
-> 1. For each filter ![](http://latex.codecogs.com/gif.latex?F_{i,j}), calculate the sum of its absolute kernel weights![](http://latex.codecogs.com/gif.latex?s_j=\sum_{l=1}^{n_i}\sum|K_l|)
+> 1. 对于每个滤波器 ![](http://latex.codecogs.com/gif.latex?F_{i,j})，计算其绝对内核权重之和![](http://latex.codecogs.com/gif.latex?s_j=\sum_{l=1}^{n_i}\sum|K_l|)
 > 2. 将滤波器按 ![](http://latex.codecogs.com/gif.latex?s_j) 排序。
 > 3. 修剪 ![](http://latex.codecogs.com/gif.latex?m) 具有最小求和值及其相应特征图的滤波器。 在 下一个卷积层中，被剪除的特征图所对应的内核也被移除。
 > 4. 为第 ![](http://latex.codecogs.com/gif.latex?i) 和 ![](http://latex.codecogs.com/gif.latex?i+1) 层创建新的内核举证，并保留剩余的内核 权重，并复制到新模型中。
@@ -421,11 +421,11 @@ pruner.compress()
 此 Pruner 基于先验经验，实现了引导式的启发搜索方法，模拟退火（SA）算法。 增强的模拟退火算法基于以下发现：具有更多权重的深度神经网络层通常具有较高的可压缩度，对整体精度的影响更小。
 
 - 随机初始化剪枝率的分布（稀疏度）。
-- While current_temperature < stop_temperature:
+- 当 current_temperature < stop_temperature 时：
     1. 对当前分布生成扰动
     2. 对扰动的分布进行快速评估
     3. 根据性能和概率来决定是否接受扰动，如果不接受，返回步骤 1
-    4. cool down, current_temperature <- current_temperature * cool_down_rate
+    4. 冷却，current_temperature &#061; current_temperature * cool_down_rate
 
 更多详细信息，参考 [AutoCompress: An Automatic DNN Structured Pruning Framework for Ultra-High Compression Rates](https://arxiv.org/abs/1907.03141)。
 
