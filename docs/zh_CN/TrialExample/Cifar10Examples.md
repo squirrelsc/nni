@@ -2,11 +2,11 @@
 
 ## 概述
 
-[CIFAR-10][3] classification is a common benchmark problem in machine learning. CIFAR-10 数据集是图像的集合。 它也是机器学习领域最常用的数据集之一，包含 60000 万张 32x32 的图像，共有 10 个分类。 因此以 CIFAR-10 分类为例来介绍 NNI 的用法。
+[CIFAR-10][3] 分类是机器学习中常用的基准问题。 CIFAR-10 数据集是图像的集合。 它也是机器学习领域最常用的数据集之一，包含 60000 万张 32x32 的图像，共有 10 个分类。 因此以 CIFAR-10 分类为例来介绍 NNI 的用法。
 
 ### **目标**
 
-总所周知，模型 optimizer (优化器）的选择直接影响了最终指标的性能。 The goal of this tutorial is to **tune a better performace optimizer** to train a relatively small convolutional neural network (CNN) for recognizing images.
+总所周知，模型 optimizer (优化器）的选择直接影响了最终指标的性能。 本教程的目标是**调优出性能更好的优化器**，从而为图像识别训练出一个相对较小的卷积网络（CNN）。
 
 本例中，选择了以下常见的深度学习优化器：
 
@@ -18,7 +18,7 @@
 
 此示例需要安装 PyTorch。 PyTorch 安装包需要选择所基于的 Python 和 CUDA 版本。
 
-Here is an example of the environment python==3.5 and cuda == 8.0, then using the following commands to install [PyTorch][2]:
+这是环境 python==3.5 且 cuda == 8.0 的示例，然后用下列命令来安装 [PyTorch][2]：
 
 ```bash
 python3 -m pip install http://download.pytorch.org/whl/cu80/torch-0.4.1-cp35-cp35m-linux_x86_64.whl
@@ -39,7 +39,7 @@ python3 -m pip install torchvision
 }
 ```
 
-*Implemented code directory: [search_space.json][8]*
+*实现代码：[earch_space.json][8]*
 
 **Trial（尝试）**
 
@@ -49,25 +49,25 @@ python3 -m pip install torchvision
 * 使用 `nni.report_intermediate_result(acc)` 在每个 epoch 结束时返回中间结果。
 * 使用 `nni.report_final_result(acc)` 在每个 Trial 结束时返回最终结果。
 
-*Implemented code directory: [main.py][9]*
+*实现代码：[main.py][9]*
 
-You can also use your previous code directly, refer to [How to define a trial][5] for modify.
+还可直接修改现有的代码来支持 Nni，参考：[如何实现 Trial][5]。
 
 **配置**
 
 这是在本机运行 Experiment 的示例（多GPU）：
 
-code directory: [examples/trials/cifar10_pytorch/config.yml][6]
+代码：[examples/trials/cifar10_pytorch/config.yml][6]
 
 这是在 OpenPAI 上运行 Experiment 的示例：
 
-code directory: [examples/trials/cifar10_pytorch/config_pai.yml][7]
+代码：[examples/trials/cifar10_pytorch/config_pai.yml][7]
 
-*The complete examples we have implemented: [examples/trials/cifar10_pytorch/][1]*
+*完整示例：[examples/trials/cifar10_pytorch/][1]*
 
 #### 运行 Experiment
 
-We are ready for the experiment, let's now **run the config.yml file from your command line to start the experiment**.
+以上即为 Experiment 的代码介绍，**从命令行运行 config.yml 文件来开始 Experiment**。
 
 ```bash
 nnictl create --config nni/examples/trials/cifar10_pytorch/config.yml
