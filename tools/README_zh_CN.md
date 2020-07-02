@@ -41,17 +41,17 @@ python >= 3.5
       ```txt
       1.sudo vim /etc/profile
 
-      2.At the end of the file, add
+      2.在文件最后添加
 
             export PATH={your nnictl path}:$PATH
 
-      save and exit.
+      保存并退出。
 
       3.source /etc/profile
       ```
 
 ## 开始使用 NNI CTL
 
-please reference to the [NNI CTL document][].
+参考 [NNI CTL 文档][]。
 
-[NNI CTL document]: ../docs/en_US/Nnictl.md
+[NNI CTL 文档]: ../docs/zh_CN/Nnictl.md
