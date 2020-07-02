@@ -16,15 +16,15 @@ dataset_valid = CIFAR10(root="./data", train=False, download=True, transform=val
 criterion = nn.CrossEntropyLoss()
 optimizer = torch.optim.SGD(model.parameters(), 0.05, momentum=0.9, weight_decay=1.0E-4)
 
-# use NAS here
+# 在这里使用 NAS
 def top1_accuracy(output, target):
-    # this is the function that computes the reward, as required by ENAS algorithm
+    # 根据 ENAS 算法需求，此处计算奖励
     batch_size = target.size(0)
     _, predicted = torch.max(output.data, 1)
     return (predicted == target).sum().item() / batch_size
 
 def metrics_fn(output, target):
-    # metrics function receives output and target and computes a dict of metrics
+    # metrics 函数接收输出，并计算指标的 dict
     return {"acc1": top1_accuracy(output, target)}
 
 from nni.nas.pytorch import enas
@@ -38,8 +38,8 @@ trainer = enas.EnasTrainer(model,
                            dataset_train=dataset_train,
                            dataset_valid=dataset_valid,
                            log_frequency=10)  # print log every 10 steps
-trainer.train()  # training
-trainer.export(file="model_dir/final_architecture.json")  # export the final architecture to file
+trainer.train()  # 训练
+trainer.export(file="model_dir/final_architecture.json")  # 将最终架构导出为文件
 ```
 
 `model` 是一个[用户定义的搜索空间](./WriteSearchSpace.md)。 然后需要准备搜索数据和模型评估指标。 要从定义的搜索空间中进行搜索，需要实例化 One-Shot 算法，即 Trainer（如，EnasTrainer）。 Trainer 会提供一些可以自定义的参数。 如，损失函数，指标函数，优化器以及数据集。 这些功能可满足大部分需求，NNI 会尽力让内置 Trainer 能够处理更多的模型、任务和数据集。
