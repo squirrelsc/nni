@@ -64,7 +64,7 @@ L 应在逻辑上根据 y 在 X 处获取的值来确定，可考虑使用的三
 
 ![](../../img/parallel_tpe_search3.gif)
 
-## Experiment
+## 实验
 
 ### Branin-Hoo
 
