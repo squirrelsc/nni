@@ -4,7 +4,7 @@
 .. contents::
 ```
 
-## Trial
+## Trial（尝试）
 
 ```eval_rst
 ..  autofunction:: nni.get_next_parameter
@@ -16,7 +16,7 @@
 ..  autofunction:: nni.get_sequence_id
 ```
 
-## Tuner
+## Tuner（调参器）
 
 ```eval_rst
 ..  autoclass:: nni.tuner.Tuner
