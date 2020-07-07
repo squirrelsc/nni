@@ -254,7 +254,7 @@ Experiment 相关信息会显示在界面上，配置和搜索空间等。 可�
 
 ![](../../img/QuickStart5.png)
 
-下面是所有 Trial 的状态。 包括：
+下面是所有 Trial 的状态。 特别是：
 
 * Trial 详情：Trial 的 id，持续时间，开始时间，结束时间，状态，精度和搜索空间文件。
 * 如果在 OpenPAI 平台上运行，还可以看到 hdfsLog。
