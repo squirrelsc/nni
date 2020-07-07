@@ -29,7 +29,7 @@ class CustomizedAssessor(Assessor):
 
     def assess_trial(self, trial_history):
         """
-        确定是否要停止该 Trial。 必须重载。
+        决定是否应该终止 Trial。 必须重载。
         trial_history: 中间结果列表对象。
         返回 AssessResult.Good 或 AssessResult.Bad.
         """
@@ -52,7 +52,7 @@ assessor:
     arg1: value1
 ```
 
-注意在 **2** 中， `trial_history` 对象与 Trial 通过 `report_intermediate_result` 函数返回给 Assessor 的对象完全一致。
+注意在 **2** 中， 对象 `trial_history` 和 `report_intermediate_result` 函数返回给 Assessor 的完全一致。
 
 Assessor 的工作目录是`<home>/nni/experiments/<experiment_id>/log` 可从环境变量 `NNI_LOG_DIRECTORY` 中获取。
 
