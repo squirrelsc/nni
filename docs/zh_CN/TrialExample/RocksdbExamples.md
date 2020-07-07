@@ -109,7 +109,7 @@ nnictl create --config ./config_tpe.yml
 
 下表列出了两个 Tuner 获得的最佳 Trial 以及相应的参数和指标。 不出所料，两个 Tuner 都为 `fillrandom` 测试找到了一样的最佳配置。
 
-| Tuner | 最佳 Trial | 最佳 OPS | write_buffer_size | min_write_buffer_number_to_merge | level0_file_num_compaction_trigger |
-|:-----:|:--------:|:------:|:-------------------:|:------------------------------------:|:--------------------------------------:|
-| SMAC  |   255    | 779289 |       2097152       |                 7.0                  |                  7.0                   |
-|  TPE  |   169    | 761456 |       2097152       |                 7.0                  |                  7.0                   |
+| Tuner（调参器） | 最佳 Trial | 最佳 OPS | write_buffer_size | min_write_buffer_number_to_merge | level0_file_num_compaction_trigger |
+|:----------:|:--------:|:------:|:-------------------:|:------------------------------------:|:--------------------------------------:|
+|    SMAC    |   255    | 779289 |       2097152       |                 7.0                  |                  7.0                   |
+|    TPE     |   169    | 761456 |       2097152       |                 7.0                  |                  7.0                   |
