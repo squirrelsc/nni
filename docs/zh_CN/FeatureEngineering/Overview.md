@@ -150,7 +150,7 @@ class CustomizedSelector(FeatureSelector, BaseEstimator, SelectorMixin):
 
     def get_params(self, ...):
         """
-        获取参数。
+        为此 estimator 获取参数
         """
         params = self.__dict__
         params = {key: val for (key, val) in params.items()
