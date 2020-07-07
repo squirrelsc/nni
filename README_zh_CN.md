@@ -84,7 +84,7 @@ NNI 提供命令行工具以及友好的 WebUI 来管理训练的 Experiment。 
            <li><a href="docs/zh_CN/TrialExample/Cifar10Examples.md">Cifar10-pytorch</li></a>
            <li><a href="docs/zh_CN/TrialExample/SklearnExamples.md">Scikit-learn</a></li>
            <li><a href="docs/zh_CN/TrialExample/EfficientNet.md">EfficientNet</a></li>
-           <li><a href="docs/zh_CN/TrialExample/OpEvoExamples.md">GPU Kernel 调优</li></a>
+           <li><a href="examples/feature_engineering/auto-feature-engineering/README_zh_CN.md">GPU Kernel 调优</li></a>
               <a href="docs/zh_CN/SupportedFramework_Library.md">更多...</a><br/>
           </ul>
         </ul>
@@ -100,7 +100,7 @@ NNI 提供命令行工具以及友好的 WebUI 来管理训练的 Experiment。 
             </ul>
           <b>启发式搜索</b>
           <ul>
-            <li><a href="docs/zh_CN/Tuner/BuiltinTuner.md#Evolution">Naïve Evolution（朴素进化）</a></li>
+            <li><a href="docs/zh_CN/Tuner/BuiltinTuner.md#Evolution">Naïve Evolution（进化算法）</a></li>
             <li><a href="docs/zh_CN/Tuner/BuiltinTuner.md#Anneal">Anneal（退火算法）</a></li>
             <li><a href="docs/zh_CN/Tuner/BuiltinTuner.md#Hyperband">Hyperband</a></li>
             <li><a href="docs/zh_CN/Tuner/BuiltinTuner.md#PBTTuner">PBT</a></li>
@@ -138,10 +138,10 @@ NNI 提供命令行工具以及友好的 WebUI 来管理训练的 Experiment。 
               <li><a href="docs/zh_CN/Compressor/Pruner.md#agp-pruner">AGP Pruner</a></li>
               <li><a href="docs/zh_CN/Compressor/Pruner.md#slim-pruner">Slim Pruner</a></li>
               <li><a href="docs/zh_CN/Compressor/Pruner.md#fpgm-pruner">FPGM Pruner</a></li>
-              <li><a href="docs/zh_CN/Compressor/Pruner.md#netadapt-pruner">NetAdapt Pruner</a></li>
-              <li><a href="docs/zh_CN/Compressor/Pruner.md#simulatedannealing-pruner">SimulatedAnnealing Pruner</a></li>
-              <li><a href="docs/zh_CN/Compressor/Pruner.md#admm-pruner">ADMM Pruner</a></li>
-              <li><a href="docs/zh_CN/Compressor/Pruner.md#autocompress-pruner">AutoCompress Pruner</a></li>
+              <li><a href="examples/feature_engineering/auto-feature-engineering/README_zh_CN.md">NetAdapt Pruner</a></li>
+              <li><a href="examples/feature_engineering/auto-feature-engineering/README_zh_CN.md">SimulatedAnnealing Pruner</a></li>
+              <li><a href="examples/feature_engineering/auto-feature-engineering/README_zh_CN.md">ADMM Pruner</a></li>
+              <li><a href="examples/feature_engineering/auto-feature-engineering/README_zh_CN.md">AutoCompress Pruner</a></li>
             </ul>
             <b>量化</b>
             <ul>
@@ -156,7 +156,7 @@ NNI 提供命令行工具以及友好的 WebUI 来管理训练的 Experiment。 
           </ul>
           <a href="docs/zh_CN/Assessor/BuiltinAssessor.md">提前终止算法</a>
           <ul>
-          <li><a href="docs/zh_CN/Assessor/BuiltinAssessor.md#Medianstop">Median Stop（中位数终止）</a></li>
+          <li><a href="docs/zh_CN/Assessor/BuiltinAssessor.md#Medianstop">Median Stop</a></li>
           <li><a href="docs/zh_CN/Assessor/BuiltinAssessor.md#Curvefitting">Curve Fitting（曲线拟合）</a></li>
           </ul>
       </td>
@@ -191,12 +191,12 @@ NNI 提供命令行工具以及友好的 WebUI 来管理训练的 Experiment。 
       <ul>
         <li><a href="docs/zh_CN/Tuner/CustomizeTuner.md">自定义 Tuner</a></li>
         <li><a href="docs/zh_CN/Assessor/CustomizeAssessor.md">自定义 Assessor</a></li>
-        <li><a href="docs/zh_CN/Tutorial/InstallCustomizedAlgos.md">安装自定义的 Tuner，Assessor，Advisor</a></li>
+        <li><a href="examples/feature_engineering/auto-feature-engineering/README_zh_CN.md">安装自定义的 Tuner，Assessor，Advisor</a></li>
       </ul>
       </td>
         <td style="border-top:#FF0000 solid 0px;">
       <ul>
-        <li><a href="docs/zh_CN/TrainingService/Overview.md">支持训练平台</li>
+        <li><a href="docs/zh_CN/TrainingService/SupportTrainingService.md">支持训练平台</li>
         <li><a href="docs/zh_CN/TrainingService/HowToImplementTrainingService.md">实现训练平台</a></li>
       </ul>
       </td>
@@ -230,7 +230,7 @@ Linux 和 macOS 下 NNI 系统需求[参考这里](https://nni.readthedocs.io/zh
 
 * 如果遇到任何权限问题，可添加 `--user` 在用户目录中安装 NNI。
 * 目前，Windows 上的 NNI 支持本机，远程和 OpenPAI 模式。 强烈推荐使用 Anaconda 或 Miniconda [在 Windows 上安装 NNI](docs/zh_CN/Tutorial/InstallationWin.md)。
-* 如果遇到如 `Segmentation fault` 等错误参考[常见问题](docs/zh_CN/Tutorial/FAQ.md)。 Windows 上的 FAQ 参考[在 Windows 上使用 NNI](docs/zh_CN/Tutorial/InstallationWin.md#faq)。
+* 如果遇到如 `Segmentation fault` 等错误参考[常见问题](docs/zh_CN/Tutorial/FAQ.md)。 Windows 上的 FAQ 参考[在 Windows 上使用 NNI](docs/zh_CN/Tutorial/InstallationWin.md#faq)。 Windows 上的 FAQ 参考[在 Windows 上使用 NNI](docs/zh_CN/Tutorial/InstallationWin.md#faq)。
 
 ### **验证安装**
 
@@ -339,9 +339,9 @@ You can use these commands to get more information about the experiment
 * 在 [Gitter](https://gitter.im/Microsoft/nni?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) 中参与讨论。
 
 加入聊天组：
-| Gitter                                                                                                      |   | 微信                                                                   |
-| ----------------------------------------------------------------------------------------------------------- | - | -------------------------------------------------------------------- |
-| ![图片](https://user-images.githubusercontent.com/39592018/80665738-e0574a80-8acc-11ea-91bc-0836dc4cbf89.png) | 或 | ![图片](https://github.com/scarlett2018/nniutil/raw/master/wechat.png) |
+| Gitter                                                                                                         |   | 微信                                                                      |
+| -------------------------------------------------------------------------------------------------------------- | - | ----------------------------------------------------------------------- |
+| ![image](https://user-images.githubusercontent.com/39592018/80665738-e0574a80-8acc-11ea-91bc-0836dc4cbf89.png) | 或 | ![image](https://github.com/scarlett2018/nniutil/raw/master/wechat.png) |
 
 
 ## 相关项目
