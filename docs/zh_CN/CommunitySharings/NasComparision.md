@@ -63,7 +63,7 @@ ENAS，ENAS（macro）在 OUI-Adience-Age 数据集中表现较好，并且 ENAS
 
 NAO-WS 在 ImageNet-10-2 中表现良好，但在 OUI-Adience-Age 中表现非常差。
 
-## 参考文献
+## 参考
 
 1. Jin, Haifeng, Qingquan Song, and Xia Hu. "Efficient neural architecture search with network morphism." *arXiv preprint arXiv:1806.10282* (2018).
 
