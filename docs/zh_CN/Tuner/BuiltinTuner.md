@@ -173,7 +173,7 @@ tuner:
 
 <a name="Batch"></a>
 
-### Batch Tuner（批处理 Tuner）
+### Batch Tuner
 
 > 名称：BatchTuner
 
@@ -339,7 +339,7 @@ tuner:
 BOHB Advisor 需要 [ConfigSpace](https://github.com/automl/ConfigSpace) 包。 可以使用以下命令安装 ConfigSpace。
 
 ```bash
-nnictl package install --name=BOHB
+nnictl package install --name=SMAC
 ```
 
 **建议场景**
