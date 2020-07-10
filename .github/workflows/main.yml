@@ -7,14 +7,8 @@ name: CI
 on:
   push:
     branches: [ master ]
-    paths:
-      - '**.md'
-      - '**.rst'
-      - '/docs/en_US/**'
-      - '/.github/worklflows/main.yml'
-      - '/crowdin.yml'
   schedule:
-    - cron:  '*/30 * * * *'
+    - cron:  '*/1 * * * *'
     
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
